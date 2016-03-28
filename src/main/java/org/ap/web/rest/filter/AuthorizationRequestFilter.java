@@ -39,7 +39,7 @@ public class AuthorizationRequestFilter implements ContainerRequestFilter {
 	public void filter(ContainerRequestContext requestContext) throws WebApplicationException {
 		// Exclude options call for chrome support
 		if (requestContext.getMethod().equals("OPTIONS")) return;
-		// Exclude user creation request
+		// Exclude user creation request and helloworld
 		if (requestContext.getUriInfo().getPath().startsWith("auth") && requestContext.getMethod().equals("POST")) return;
 		if (requestContext.getUriInfo().getPath().startsWith("hello")) return;
 		// Filter out all other request
