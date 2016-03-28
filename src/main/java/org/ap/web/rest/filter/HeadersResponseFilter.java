@@ -27,7 +27,7 @@ public class HeadersResponseFilter implements ContainerResponseFilter {
 
 	@Override
 	public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext) throws IOException {
-		responseContext.getHeaders().add(ACCESS_CONTROL_ALLOW_ORIGIN, ServerConfig.ORIGIN);
+		responseContext.getHeaders().add(ACCESS_CONTROL_ALLOW_ORIGIN, "*");
 		//responseContext.getHeaders().add("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT, OPTIONS");			
 		responseContext.getHeaders().add(ACCESS_CONTROL_ALLOW_HEADERS, HttpHeaders.AUTHORIZATION);
 	}

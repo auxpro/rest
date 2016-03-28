@@ -41,6 +41,7 @@ public class AuthorizationRequestFilter implements ContainerRequestFilter {
 		if (requestContext.getMethod().equals("OPTIONS")) return;
 		// Exclude user creation request
 		if (requestContext.getUriInfo().getPath().startsWith("auth") && requestContext.getMethod().equals("POST")) return;
+		if (requestContext.getUriInfo().getPath().startsWith("hello")) return;
 		// Filter out all other request
 		String header = requestContext.getHeaderString(HEADER);
 		if (header == null) {

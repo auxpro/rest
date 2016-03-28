@@ -70,10 +70,12 @@ public class TestModuleBase extends TestBase {
 	}
 	@BeforeClass
 	public static void setUpDBClient() {
+		System.out.println("opening");
 		CONN = MongoConnection.getInstance();
 	}
 	@AfterClass
 	public static void tearDownDBClient() {
+		System.out.println("closing");
 		CONN.close();
 	}
 	

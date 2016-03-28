@@ -9,7 +9,6 @@
 	<listener>
 		<listener-class>org.apache.shiro.web.env.EnvironmentLoaderListener</listener-class>
 	</listener>
-  -->
 
 	<filter>
 		<filter-name>Shiro</filter-name>
@@ -19,6 +18,7 @@
 		<filter-name>Shiro</filter-name>
 		<url-pattern>/rest/*</url-pattern>
 	</filter-mapping>
+  -->
 
 
 	<servlet>
@@ -26,14 +26,14 @@
 		<servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
 		<init-param>
 			<param-name>javax.ws.rs.Application</param-name>
-			<param-value>org.ap.web.rest.application.RestApplication</param-value>
+			<param-value>org.ap.web.rest.RestApplication</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 
 	<servlet-mapping>
 		<servlet-name>AP REST Service</servlet-name>
-		<url-pattern>/rest/*</url-pattern>
+		<url-pattern>/*</url-pattern>
 	</servlet-mapping>
 
 </web-app>
