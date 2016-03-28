@@ -1,0 +1,7 @@
+{
+	name:'society1',
+	password:'society1pwd',
+	email:'society1@society1.fr',
+	active:true,
+	roles:['sad']
+}

@@ -1,0 +1,7 @@
+{
+	name:'user1',
+	password:'user1pwd',
+	email:'user1@user1.fr',
+	active:true,
+	roles:['aux']
+}

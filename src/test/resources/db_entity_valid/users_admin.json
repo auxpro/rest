@@ -1,0 +1,7 @@
+{
+	name:'admin',
+	password:'secret',
+	email:'admin@admin.fr',
+	active:true,
+	roles:['admin']
+}
