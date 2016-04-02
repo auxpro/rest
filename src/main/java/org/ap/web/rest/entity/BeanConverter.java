@@ -61,16 +61,20 @@ public class BeanConverter {
 		bean.setLastName(aux.getString(MongoConstants.Auxiliaries.LAST_NAME));
 		bean.setPhone(aux.getString(MongoConstants.Auxiliaries.PHONE));
 		Object o = aux.get(MongoConstants.Auxiliaries.ADDRESS);
-		System.out.println(o);
+		System.out.println("address: " + o);
+		System.out.println(aux.toJson());
 		return bean;
 	}
 	public static Document convertToDocument(AuxiliaryBean aux){
 		return new Document()
-				.append(MongoConstants.Users.NAME, aux.getName())
-				.append(MongoConstants.Users.EMAIL, aux.getEmail())
-				.append(MongoConstants.Users.PASSWORD, aux.getPassword())
-				.append(MongoConstants.Users.ACTIVE, aux.getActive())
-				.append(MongoConstants.Users.ROLES, convertToArrayList(aux.getRoles()));
+				.append(MongoConstants.Auxiliaries.NAME, aux.getName())
+				.append(MongoConstants.Auxiliaries.EMAIL, aux.getEmail())
+				.append(MongoConstants.Auxiliaries.PASSWORD, aux.getPassword())
+				.append(MongoConstants.Auxiliaries.ACTIVE, aux.getActive())
+				.append(MongoConstants.Auxiliaries.ROLES, convertToArrayList(aux.getRoles()))
+				.append(MongoConstants.Auxiliaries.FIRST_NAME, aux.getFirstName())
+				.append(MongoConstants.Auxiliaries.LAST_NAME, aux.getLastName())
+				.append(MongoConstants.Auxiliaries.PHONE, aux.getPhone());		
 	}
 	
 	private static List<String> convertToArrayList(String[] in){

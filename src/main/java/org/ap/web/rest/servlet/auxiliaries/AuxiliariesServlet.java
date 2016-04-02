@@ -60,9 +60,9 @@ public class AuxiliariesServlet extends ServletBase implements IAuxiliariesServl
 	@Override
 	public Response getAuxiliaryJSON(SecurityContext sc, String name) {
 		try {
-			Document user = _service.getUserByName(name);
-			if (user == null) throw APException.USER_NOT_FOUND;
-			UserBean bean = BeanConverter.convertToUser(user);
+			Document userAux = _service.getUserByName(name);
+			if (userAux == null) throw APException.USER_NOT_FOUND;
+			AuxiliaryBean bean = BeanConverter.convertToAuxiliary(userAux);
 			return Response.status(200).entity(bean, resolveAnnotations(sc, bean)).build();
 		} catch (APException e) {
 			return sendException(e);

@@ -1,5 +1,6 @@
 package tools;
 
+import org.ap.web.rest.entity.AuxiliaryBean;
 import org.ap.web.rest.entity.UserBean;
 
 import junit.framework.TestCase;
@@ -18,5 +19,12 @@ public class AssertHelper {
 		} else {
 			TestCase.assertNull(actual.getRoles());
 		}
+	}
+	
+	public static void assertAuxiliary(AuxiliaryBean expected, AuxiliaryBean actual) {
+		assertUser(expected, actual);
+		TestCase.assertEquals(expected.getFirstName(), actual.getFirstName());
+		TestCase.assertEquals(expected.getLastName(), actual.getLastName());
+		TestCase.assertEquals(expected.getPhone(), actual.getPhone());
 	}
 }
