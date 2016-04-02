@@ -48,11 +48,13 @@ public class UsersMongoServiceTest extends MongoServiceTestBase {
 
 	@Test
 	public void testV_CheckUserValid() throws Exception {
-		AssertHelper.assertUser(TestData.USER_ADMIN.BEAN, BeanConverter.convertToUser(_svc.checkUser(TestData.USER_ADMIN.NAME, TestData.USER_ADMIN.PASSWORD)));
+		UserBean userAdmin = TestData.getUserFromJson("users_admin.json");
+		AssertHelper.assertUser(userAdmin, BeanConverter.convertToUser(_svc.checkUser(userAdmin.getName(), userAdmin.getPassword())));
 	}
 	@Test
 	public void testV_getUserByName_Valid() throws Exception {
-		AssertHelper.assertUser(TestData.USER_ADMIN.BEAN, BeanConverter.convertToUser(_svc.getUserByName(TestData.USER_ADMIN.NAME)));
+		UserBean userAdmin = TestData.getUserFromJson("users_admin.json");
+		AssertHelper.assertUser(userAdmin, BeanConverter.convertToUser(_svc.getUserByName(userAdmin.getName())));
 	}
 	@Test
 	public void testV_getUserByName_Invalid() throws Exception {
@@ -60,7 +62,8 @@ public class UsersMongoServiceTest extends MongoServiceTestBase {
 	}
 	@Test
 	public void testV_CheckEmailExists() throws Exception {
-		AssertHelper.assertUser(TestData.USER_ADMIN.BEAN, BeanConverter.convertToUser(_svc.getUserByEmail(TestData.USER_ADMIN.EMAIL)));
+		UserBean userAdmin = TestData.getUserFromJson("users_admin.json");
+		AssertHelper.assertUser(userAdmin, BeanConverter.convertToUser(_svc.getUserByEmail(userAdmin.getEmail())));
 	}
 	@Test
 	public void testV_getUserByEmail_Invalid() throws Exception {
@@ -68,7 +71,7 @@ public class UsersMongoServiceTest extends MongoServiceTestBase {
 	}
 	@Test
 	public void testV_CountUsers() throws APException {
-		TestCase.assertEquals(TestData.TEST_USERS.size(), _svc.getUsers().size());
+		TestCase.assertEquals(5, _svc.getUsers().size());
 	}
 	@Test
 	public void testV_CreateUser() throws Exception {

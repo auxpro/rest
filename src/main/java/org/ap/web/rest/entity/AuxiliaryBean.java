@@ -10,7 +10,7 @@ public class AuxiliaryBean extends UserBean {
 	private String firstName;
 	private String lastName;
 	private String phone;
-	private AddressBean adress;
+	private AddressBean address;
 
 	/* CONSTRUCTORS */
 	
@@ -27,6 +27,6 @@ public class AuxiliaryBean extends UserBean {
 	public String getPhone() { return phone; }
 	public void setPhone(String phone) { this.phone = phone; }
 	
-	public AddressBean getAdress() { return adress; }
-	public void setAdress(AddressBean adress) { this.adress = adress; }
+	public AddressBean getAddress() { return address; }
+	public void setAdress(AddressBean adress) { this.address = adress; }
 }

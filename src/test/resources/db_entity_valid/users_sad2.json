@@ -1,7 +1,14 @@
 {
-	name:'society2',
-	password:'society2pwd',
-	email:'society2@society2.fr',
-	active:false,
-	roles:['sad']
+	"name":"society2",
+	"password":"society2pwd",
+	"email":"society2@society2.fr",
+	"active":false,
+	"roles":["sad"],
+	"society":"Societe 2",
+	"phone":"20 20 20 20 20",
+	"address": {
+		"address":"2 avenue de la seconde societe",
+		"postalCode": 75020,
+		"city": "Paris"
+	}
 }

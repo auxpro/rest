@@ -7,9 +7,9 @@ public class ServiceBean extends UserBean {
 	
 	/* ATTRIBUTES */
 	
-	private String name;
+	private String society;
 	private String phone;
-	private AddressBean adress;
+	private AddressBean address;
 
 	/* CONSTRUCTORS */
 	
@@ -17,12 +17,12 @@ public class ServiceBean extends UserBean {
 	
 	/* METHODS */
 	
-	public String getName() { return name; }
-	public void setName(String name) { this.name = name; }
+	public String getSociety() { return society; }
+	public void setSociety(String society) { this.society = society; }
 	
 	public String getPhone() { return phone; }
 	public void setPhone(String phone) { this.phone = phone; }
 	
-	public AddressBean getAdress() { return adress; }
-	public void setAdress(AddressBean adress) { this.adress = adress; }
+	public AddressBean getAddress() { return address; }
+	public void setAddress(AddressBean address) { this.address = address; }
 }

@@ -23,20 +23,22 @@ public class UserGetRestTest extends RestTestBase {
 
 	// users/{userId} GET
 	@Test
-	public void testI_getUser_getUnknownUser() {
-		Response rsp = prepare("/dummy", TestData.USER_ADMIN.NAME, TestData.USER_ADMIN.PASSWORD).get();
+	public void testI_getUser_getUnknownUser() throws Exception {
+		UserBean userAdmin = TestData.getUserFromJson("users_admin.json");
+		Response rsp = prepare("/dummy", userAdmin.getName(), userAdmin.getPassword()).get();
 		TestCase.assertEquals(404, rsp.getStatus());
 		TestCase.assertTrue(rsp.hasEntity());
 	}
 	@Test
-	public void testI_getUser_asUnknownUser() {
+	public void testI_getUser_asUnknownUser() throws Exception {
 		Response rsp = prepare("/user1", "dummy", "dummy").get();
 		TestCase.assertEquals(401, rsp.getStatus());
 		TestCase.assertFalse(rsp.hasEntity());
 	}
 	@Test
-	public void testI_getUser_invalidPassword() {
-		Response rsp = prepare("/user1", TestData.USER_USER1.NAME, "dummy").get();
+	public void testI_getUser_invalidPassword() throws Exception {
+		UserBean userAux1 = TestData.getAuxiliaryFromJson("users_aux1.json");
+		Response rsp = prepare("/user1", userAux1.getName(), "dummy").get();
 		TestCase.assertEquals(401, rsp.getStatus());
 		TestCase.assertFalse(rsp.hasEntity());
 	}
@@ -45,24 +47,36 @@ public class UserGetRestTest extends RestTestBase {
 
 	// users/{userId} GET
 	@Test
-	public void testV_getUserResponse() {
-		Response rsp = prepare("/user1", TestData.USER_ADMIN.NAME, TestData.USER_ADMIN.PASSWORD).get();
+	public void testV_getUserResponse() throws Exception {
+		UserBean userAdmin = TestData.getUserFromJson("users_admin.json");
+		Response rsp = prepare("/user1", userAdmin.getName(), userAdmin.getPassword()).get();
 		TestCase.assertEquals(200, rsp.getStatus());
 		TestCase.assertTrue(rsp.hasEntity());
 	}
 	@Test
-	public void testV_getUserObject_AsAdmin() {
-		UserBean user = prepare("/user1", TestData.USER_ADMIN.NAME, TestData.USER_ADMIN.PASSWORD).get(UserBean.class);
-		AssertHelper.assertUser(TestData.USER_USER1.BEAN, user);
+	public void testV_getUserObject_AsAdmin() throws Exception {
+		UserBean userAdmin = TestData.getUserFromJson("users_admin.json");
+		UserBean userAux1 = TestData.getAuxiliaryFromJson("users_aux1.json");
+		UserBean user = prepare("/user1", userAdmin.getName(), userAdmin.getPassword()).get(UserBean.class);
+		AssertHelper.assertUser(userAux1, user);
 	}
 	@Test
-	public void testV_getUserObject_AsSelf() {
-		UserBean user = prepare("/user1", TestData.USER_USER1.NAME, TestData.USER_USER1.PASSWORD).get(UserBean.class);
-		AssertHelper.assertUser(TestData.USER_USER1.BEAN, user);
+	public void testV_getUserObject_AsSelf() throws Exception {
+		UserBean userAux1 = TestData.getAuxiliaryFromJson("users_aux1.json");
+		UserBean user = prepare("/user1", userAux1.getName(), userAux1.getPassword()).get(UserBean.class);
+		AssertHelper.assertUser(userAux1, user);
 	}
 	@Test
-	public void testV_getUserObject_AsOther() {
-		UserBean user = prepare("/user1", TestData.USER_USER2.NAME, TestData.USER_USER2.PASSWORD).get(UserBean.class);
-		AssertHelper.assertUser(TestData.USER_USER1.BEAN, user);
+	public void testV_getUserObject_AsOther() throws Exception {
+		UserBean userAux1 = TestData.getAuxiliaryFromJson("users_aux1.json");
+		UserBean userAux2 = TestData.getAuxiliaryFromJson("users_aux2.json");
+		UserBean user = prepare("/user1", userAux2.getName(), userAux2.getPassword()).get(UserBean.class);
+		// Informations are private
+		userAux1.setName(null);
+		userAux1.setPassword(null);
+		userAux1.setEmail(null);
+		userAux1.setActive(false);
+		userAux1.setRoles(null);
+		AssertHelper.assertUser(userAux1, user);
 	}
 }

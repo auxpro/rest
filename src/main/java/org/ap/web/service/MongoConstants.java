@@ -9,6 +9,24 @@ public class MongoConstants {
 		public static final String PASSWORD = "password";
 		public static final String ACTIVE   = "active";
 		public static final String ROLES    = "roles";
-		
+	}
+	
+	public static class Auxiliaries extends Users {
+		public static final String FIRST_NAME = "firstName";
+		public static final String LAST_NAME  = "lastName";
+		public static final String PHONE      = "phone";
+		public static final String ADDRESS    = "address";
+	}
+	
+	public static class Services extends Users {
+		public static final String SOCIETY    = "society";
+		public static final String PHONE      = "phone";
+		public static final String ADDRESS    = "address";
+	}
+	
+	public static class Address {
+		public static final String ADDRESS = "address";
+		public static final String POSTAL  = "postal";
+		public static final String CITY    = "city";
 	}
 }

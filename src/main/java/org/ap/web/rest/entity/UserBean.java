@@ -10,7 +10,7 @@ public class UserBean {
 	
 	/* ATTRIBUTES */
 	
-	private String username;
+	private String name;
 	private String password;
 	private String email;
 	private boolean active;
@@ -23,8 +23,8 @@ public class UserBean {
 	/* METHODS */
 	
 	@PrivateInformation
-	public String getName() { return username; }
-	public void setName(String username) { this.username = username; }
+	public String getName() { return name; }
+	public void setName(String username) { this.name = username; }
 	
 	@SecretInformation
 	public String getPassword() { return password; }

@@ -17,6 +17,7 @@ public class BeanConverter {
 		exBean.setError(bean);
 		return exBean;
 	}
+	
 	public static UserBean[] convertToUsers(List<Document> users) {
 		UserBean[] beans = new UserBean[users.size()];
 		for (int i = 0 ; i < beans.length ; i++) {
@@ -41,6 +42,37 @@ public class BeanConverter {
 				.append(MongoConstants.Users.ACTIVE, user.getActive())
 				.append(MongoConstants.Users.ROLES, convertToArrayList(user.getRoles()));
 	}
+	
+	public static AuxiliaryBean[] convertToAuxiliaries(List<Document> auxs) {
+		AuxiliaryBean[] beans = new AuxiliaryBean[auxs.size()];
+		for (int i = 0 ; i < beans.length ; i++) {
+			beans[i] = convertToAuxiliary(auxs.get(i));
+		}
+		return beans;
+	}
+	public static AuxiliaryBean convertToAuxiliary(Document aux) {
+		AuxiliaryBean bean = new AuxiliaryBean();
+		bean.setName(aux.getString(MongoConstants.Users.NAME));
+		bean.setEmail(aux.getString(MongoConstants.Users.EMAIL));
+		//!\\ PASSWORD IS NEVER LOADED FROM DB
+		bean.setActive(aux.getBoolean(MongoConstants.Users.ACTIVE));
+		bean.setRoles(getArray(aux, MongoConstants.Users.ROLES));
+		bean.setFirstName(aux.getString(MongoConstants.Auxiliaries.FIRST_NAME));
+		bean.setLastName(aux.getString(MongoConstants.Auxiliaries.LAST_NAME));
+		bean.setPhone(aux.getString(MongoConstants.Auxiliaries.PHONE));
+		Object o = aux.get(MongoConstants.Auxiliaries.ADDRESS);
+		System.out.println(o);
+		return bean;
+	}
+	public static Document convertToDocument(AuxiliaryBean aux){
+		return new Document()
+				.append(MongoConstants.Users.NAME, aux.getName())
+				.append(MongoConstants.Users.EMAIL, aux.getEmail())
+				.append(MongoConstants.Users.PASSWORD, aux.getPassword())
+				.append(MongoConstants.Users.ACTIVE, aux.getActive())
+				.append(MongoConstants.Users.ROLES, convertToArrayList(aux.getRoles()));
+	}
+	
 	private static List<String> convertToArrayList(String[] in){
 		List<String> list = new ArrayList<String>();
 		if (in == null)

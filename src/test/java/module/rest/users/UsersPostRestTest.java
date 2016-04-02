@@ -24,28 +24,31 @@ public class UsersPostRestTest extends RestTestBase {
 	
 	@Test
 	public void testI_postUsers_restrictedUser() throws Exception {
+		UserBean userAux1 = TestData.getAuxiliaryFromJson("users_aux1.json");
 		UserBean bean = TestData.getNextUser();
-		Response response = prepare("", TestData.USER_USER1.NAME, TestData.USER_USER1.PASSWORD).post(Entity.entity(MAPPER.writeValueAsString(bean), MediaType.APPLICATION_JSON));
+		Response response = prepare("", userAux1.getName(), userAux1.getPassword()).post(Entity.entity(MAPPER.writeValueAsString(bean), MediaType.APPLICATION_JSON));
 		TestCase.assertEquals(403, response.getStatus());
 		TestCase.assertFalse(response.hasEntity());
 	}
 	@Test
 	public void testI_postUsers_sameName() throws Exception {
+		UserBean userAdmin = TestData.getUserFromJson("users_admin.json");
 		UserBean bean = TestData.getNextUser();
 		UserBean bean2 = TestData.getNextUser();
 		bean2.setName(bean.getName());
-		prepare("", TestData.USER_ADMIN.NAME, TestData.USER_ADMIN.PASSWORD).post(Entity.entity(MAPPER.writeValueAsString(bean), MediaType.APPLICATION_JSON));
-		Response response = prepare("", TestData.USER_ADMIN.NAME, TestData.USER_ADMIN.PASSWORD).post(Entity.entity(MAPPER.writeValueAsString(bean2), MediaType.APPLICATION_JSON));
+		prepare("", userAdmin.getName(), userAdmin.getPassword()).post(Entity.entity(MAPPER.writeValueAsString(bean), MediaType.APPLICATION_JSON));
+		Response response = prepare("", userAdmin.getName(), userAdmin.getPassword()).post(Entity.entity(MAPPER.writeValueAsString(bean2), MediaType.APPLICATION_JSON));
 		TestCase.assertEquals(412, response.getStatus());
 		TestCase.assertTrue(response.hasEntity());
 	}
 	@Test
 	public void testI_postUsers_sameEmail() throws Exception {
+		UserBean userAdmin = TestData.getUserFromJson("users_admin.json");
 		UserBean bean = TestData.getNextUser();
 		UserBean bean2 = TestData.getNextUser();
 		bean2.setEmail(bean.getEmail());
-		prepare("", TestData.USER_ADMIN.NAME, TestData.USER_ADMIN.PASSWORD).post(Entity.entity(MAPPER.writeValueAsString(bean), MediaType.APPLICATION_JSON));
-		Response response = prepare("", TestData.USER_ADMIN.NAME, TestData.USER_ADMIN.PASSWORD).post(Entity.entity(MAPPER.writeValueAsString(bean2), MediaType.APPLICATION_JSON));
+		prepare("", userAdmin.getName(), userAdmin.getPassword()).post(Entity.entity(MAPPER.writeValueAsString(bean), MediaType.APPLICATION_JSON));
+		Response response = prepare("", userAdmin.getName(), userAdmin.getPassword()).post(Entity.entity(MAPPER.writeValueAsString(bean2), MediaType.APPLICATION_JSON));
 		TestCase.assertEquals(412, response.getStatus());
 		TestCase.assertTrue(response.hasEntity());
 	}
@@ -54,8 +57,9 @@ public class UsersPostRestTest extends RestTestBase {
 	
 	@Test
 	public void testV_postUsers() throws Exception {
+		UserBean userAdmin = TestData.getUserFromJson("users_admin.json");
 		UserBean bean = TestData.getNextUser();
-		UserBean response = prepare("", TestData.USER_ADMIN.NAME, TestData.USER_ADMIN.PASSWORD).post(Entity.entity(MAPPER.writeValueAsString(bean), MediaType.APPLICATION_JSON), UserBean.class);
+		UserBean response = prepare("", userAdmin.getName(), userAdmin.getPassword()).post(Entity.entity(MAPPER.writeValueAsString(bean), MediaType.APPLICATION_JSON), UserBean.class);
 		TestCase.assertEquals(bean.getName(), response.getName());
 		TestCase.assertEquals(bean.getEmail(), response.getEmail());
 		TestCase.assertEquals(bean.getActive(), response.getActive());

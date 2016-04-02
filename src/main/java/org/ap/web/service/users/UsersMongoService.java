@@ -9,7 +9,6 @@ import org.ap.web.service.IMongoConnection;
 import org.ap.web.service.MongoConnection;
 import org.bson.Document;
 
-import com.mongodb.BasicDBObject;
 import com.mongodb.Block;
 import com.mongodb.client.FindIterable;
 
@@ -49,7 +48,6 @@ public class UsersMongoService implements IUsersService {
 		if (document == null) {
 			return null;
 		} else {
-			System.out.println(document.toString());
 			return document;
 		}
 	}

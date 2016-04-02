@@ -1,88 +1,100 @@
 package tools;
 
+import java.io.File;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.core.UriBuilder;
 
+import org.ap.web.internal.FileHelper;
+import org.ap.web.rest.entity.AuxiliaryBean;
 import org.ap.web.rest.entity.BeanConverter;
+import org.ap.web.rest.entity.ServiceBean;
 import org.ap.web.rest.entity.UserBean;
 import org.ap.web.service.MongoConnection;
 import org.ap.web.service.MongoConstants;
 import org.bson.Document;
+
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public class TestData {
 
-	// Db information
+	/* DATABASE INFO */
+
 	public static final String DB_SERVER = "localhost";
-	public static final int DB_PORT   = 27017;
+	public static final int    DB_PORT   = 27017;
 	public static final String DB_NAME   = "test-db";
 	public static final String DB_USER   = "";
 	public static final String DB_PASS   = "";
 
-	// Host information
+	/* SERVER INFO */
+
 	public static final String HOST_PROTOCOL = "http";
 	public static final String HOST_SERVER   = "localhost";
 	public static final String HOST_PORT     = "8090";
 	public static final String HOST_URLBASE  = "apweb/rest";
 
 	public static final String BASE_URL = HOST_PROTOCOL + "://" + HOST_SERVER + ":" + HOST_PORT + "/" + HOST_URLBASE;
-	public static final URI BASE_URI = UriBuilder.fromUri(TestData.BASE_URL).build();
+	public static final URI    BASE_URI = UriBuilder.fromUri(TestData.BASE_URL).build();
 
-	// Users
-	public static class USER_ADMIN {
-		public static final UserBean BEAN = new UserBean();
-		public static final String NAME = "admin";
-		public static final String PASSWORD = "secret";
-		public static final String EMAIL = "admin@admin.com";
-		public static final boolean ACTIVE = true;
-		public static final String[] ROLES = new String[] {"admin"};
-		static {
-			BEAN.setName(NAME);
-			BEAN.setPassword(PASSWORD);
-			BEAN.setEmail(EMAIL);
-			BEAN.setActive(ACTIVE);
-			BEAN.setRoles(ROLES);
+	/* OBJECT MAPPER */
+
+	private static ObjectMapper _MAPPER; 
+	public static ObjectMapper getMapper() {
+		if (_MAPPER == null) {
+			_MAPPER = new ObjectMapper();
+			_MAPPER.setSerializationInclusion(Include.NON_NULL);
 		}
+		return _MAPPER;
 	}
-	public static class USER_USER1 {
-		public static final UserBean BEAN = new UserBean();
-		public static final String NAME = "user1";
-		public static final String PASSWORD = "user";
-		public static final String EMAIL = "user1@lol.fr";
-		public static final boolean ACTIVE = true;
-		public static final String[] ROLES = new String[] {"adv"};
-		static {
-			BEAN.setName(NAME);
-			BEAN.setPassword(PASSWORD);
-			BEAN.setEmail(EMAIL);
-			BEAN.setActive(ACTIVE);
-			BEAN.setRoles(ROLES);
-		}
+
+	/* TEST RESOURCES */
+
+	private static final String TEST_RSC = "./src/test/resources/";
+	public static final String TEST_RSC_ENTITY_INVALID = TEST_RSC + "db_entity_invalid/";
+	public static final String TEST_RSC_ENTITY_VALID = TEST_RSC + "db_entity_valid/";
+
+	public static String loadJsonRef(String file) throws Exception {
+		return FileHelper.readFileAsString(new File(file)).replace("\n", "").replace(" ", "").replace("\t", "");
 	}
-	public static class USER_USER2 {
-		public static final UserBean BEAN = new UserBean();
-		public static final String NAME = "user2";
-		public static final String PASSWORD = "user2pwd";
-		public static final String EMAIL = "user2@lol.fr";
-		public static final boolean ACTIVE = true;
-		public static final String[] ROLES = new String[] {"adv", "admin"};
-		static {
-			BEAN.setName(NAME);
-			BEAN.setPassword(PASSWORD);
-			BEAN.setEmail(EMAIL);
-			BEAN.setActive(ACTIVE);
-			BEAN.setRoles(ROLES);
+
+	/* CREATE TEST DB */
+
+	public static void createTestDatabase() {
+		MongoConnection CONN = MongoConnection.getInstance();
+		CONN.getDatabase().drop();
+		List<Document> list = new ArrayList<Document>();
+		File dir = new File(TEST_RSC_ENTITY_VALID);
+		for (String path : dir.list()) {
+			try {
+				if (path.contains("_aux")) {
+					list.add(BeanConverter.convertToDocument(getAuxiliaryFromJson(path)));
+				} else if (path.contains("_sad")) {
+					list.add(BeanConverter.convertToDocument(getServiceFromJson(path)));
+				} else {
+					list.add(BeanConverter.convertToDocument(getUserFromJson(path)));
+				}
+			} catch (Exception e) {
+				System.err.println("unable to load ref from: " + path);
+			}
 		}
+		CONN.getCollection(MongoConstants.Users.COLLECTION).insertMany(list);
 	}
 	
-	public static final List<UserBean> TEST_USERS = new ArrayList<UserBean>();
-	static {
-		TEST_USERS.add(USER_ADMIN.BEAN);
-		TEST_USERS.add(USER_USER1.BEAN);
-		TEST_USERS.add(USER_USER2.BEAN);
+	public static UserBean getUserFromJson(String path) throws Exception {
+		String content = loadJsonRef(TEST_RSC_ENTITY_VALID + path);
+		return getMapper().readValue(content, UserBean.class);
 	}
-
+	public static AuxiliaryBean getAuxiliaryFromJson(String path) throws Exception {
+		String content = loadJsonRef(TEST_RSC_ENTITY_VALID + path);
+		return getMapper().readValue(content, AuxiliaryBean.class);
+	}
+	public static ServiceBean getServiceFromJson(String path) throws Exception {
+		String content = loadJsonRef(TEST_RSC_ENTITY_VALID + path);
+		return getMapper().readValue(content, ServiceBean.class);
+	}
 
 	private static String USER_NAME = "newUser";
 	private static int USER_ID = 0;
@@ -97,14 +109,8 @@ public class TestData {
 		bean.setRoles(new String[0]);
 		return bean;
 	}
-	
+
 	public static void main(String[] args) {
-		MongoConnection CONN = MongoConnection.getInstance();
-		CONN.getDatabase().drop();
-		List<Document> list = new ArrayList<Document>();
-		for (UserBean user : TestData.TEST_USERS) {
-			list.add(BeanConverter.convertToDocument(user));
-		}
-		CONN.getCollection(MongoConstants.Users.COLLECTION).insertMany(list);
+		createTestDatabase();
 	}
 }

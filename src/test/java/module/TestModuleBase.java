@@ -80,13 +80,16 @@ public class TestModuleBase extends TestBase {
 
 	// Database handling
 	@Before
-	public void createDB() {						
+	public void createDB() {
+		TestData.createTestDatabase();
+		/*
 		CONN.getDatabase().drop();
 		List<Document> list = new ArrayList<Document>();
 		for (UserBean user : TestData.TEST_USERS) {
 			list.add(BeanConverter.convertToDocument(user));
 		}
 		CONN.getCollection(MongoConstants.Users.COLLECTION).insertMany(list);
+		*/
 	}
 	@After
 	public void dropDB() {						

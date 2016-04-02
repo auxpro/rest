@@ -1,7 +1,15 @@
 {
-	name:'user2',
-	password:'user2pwd',
-	email:'user2@user2.fr',
-	active:false,
-	roles:['aux']
+	"name":"user1",
+	"password":"user1pwd",
+	"email":"user1@user1.fr",
+	"active":false,
+	"roles":["aux"],
+	"firstName": "Premier",
+	"lastName": "Auxiliaire",
+	"phone":"01 01 01 01 01",
+	"address": {
+		"address": "1 rue du premier utilisateur",
+		"postalCode": 75001,
+		"city": "Paris"
+	}
 }

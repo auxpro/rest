@@ -1,10 +1,11 @@
-package org.ap.web.rest.servlet.users;
+package org.ap.web.rest.servlet.auxiliaries;
 
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
 import org.ap.web.internal.APException;
+import org.ap.web.rest.entity.AuxiliaryBean;
 import org.ap.web.rest.entity.BeanConverter;
 import org.ap.web.rest.entity.UserBean;
 import org.ap.web.rest.servlet.ServletBase;
@@ -12,12 +13,12 @@ import org.ap.web.service.users.IUsersService;
 import org.ap.web.service.users.UsersMongoService;
 import org.bson.Document;
 
-@Path("/users")
-public class UsersServlet extends ServletBase implements IUsersServlet {
+@Path("/auxiliaries")
+public class AuxiliariesServlet extends ServletBase implements IAuxiliariesServlet {
 
 	/* STATIC */
 
-	public static final String PATH = "/users";  
+	public static final String PATH = "/auxiliaries";  
 
 	/* ATTRIBUTES */
 
@@ -25,10 +26,10 @@ public class UsersServlet extends ServletBase implements IUsersServlet {
 
 	/* CONSTRUCTOR */
 
-	public UsersServlet() throws APException {
+	public AuxiliariesServlet() throws APException {
 		_service = new UsersMongoService();
 	}
-	public UsersServlet(IUsersService service) throws APException {
+	public AuxiliariesServlet(IUsersService service) throws APException {
 		_service = service;
 	}
 
@@ -37,27 +38,27 @@ public class UsersServlet extends ServletBase implements IUsersServlet {
 	// IUserServlet Implementation //
 
 	@Override
-	public Response getUsersJSON(SecurityContext sc) {
+	public Response getAuxiliariesJSON(SecurityContext sc) {
 		try {
-			UserBean[] users = BeanConverter.convertToUsers(_service.getUsers());
+			AuxiliaryBean[] users = BeanConverter.convertToAuxiliaries(_service.getUsers());
 			return Response.status(200).entity(users, resolveAnnotations(sc)).build();
 		} catch (APException e) {
 			return sendException(e);
 		}
 	}
 	@Override
-	public Response createUserJSON(SecurityContext sc, UserBean bean) {
+	public Response createAuxiliaryJSON(SecurityContext sc, AuxiliaryBean bean) {
 		try {
-			Document user = BeanConverter.convertToDocument(bean);
-			user = _service.createUser(user);
-			bean = BeanConverter.convertToUser(user);
+			Document aux = BeanConverter.convertToDocument(bean);
+			aux = _service.createUser(aux);
+			bean = BeanConverter.convertToAuxiliary(aux);
 			return Response.status(201).entity(bean, resolveAnnotations(sc, bean)).build();
 		} catch (APException e) {
 			return sendException(e);
 		}
 	}
 	@Override
-	public Response getUserJSON(SecurityContext sc, String name) {
+	public Response getAuxiliaryJSON(SecurityContext sc, String name) {
 		try {
 			Document user = _service.getUserByName(name);
 			if (user == null) throw APException.USER_NOT_FOUND;
@@ -68,11 +69,11 @@ public class UsersServlet extends ServletBase implements IUsersServlet {
 		}
 	}
 	@Override
-	public Response updateUserJSON(SecurityContext sc, String id, UserBean bean) {
+	public Response updateAuxiliaryJSON(SecurityContext sc, String id, AuxiliaryBean bean) {
 		return sendException(APException.NOT_IMPLEMENTED);
 	}
 	@Override
-	public Response deleteUserJSON(SecurityContext sc, String id) {
+	public Response deleteAuxiliaryJSON(SecurityContext sc, String id) {
 		return sendException(APException.NOT_IMPLEMENTED);
 	}
 }
