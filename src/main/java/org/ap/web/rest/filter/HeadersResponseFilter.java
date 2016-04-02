@@ -7,8 +7,6 @@ import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.container.ContainerResponseFilter;
 import javax.ws.rs.core.HttpHeaders;
 
-import org.ap.web.internal.ServerConfig;
-
 public class HeadersResponseFilter implements ContainerResponseFilter {
 
 	/* STATIC */

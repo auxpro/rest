@@ -1,18 +1,11 @@
 package module;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 
 import org.ap.web.rest.RestApplication;
-import org.ap.web.rest.entity.BeanConverter;
-import org.ap.web.rest.entity.UserBean;
 import org.ap.web.service.MongoConnection;
-import org.ap.web.service.MongoConstants;
-import org.bson.Document;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
@@ -23,7 +16,6 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import tools.TestBase;
@@ -39,12 +31,7 @@ public class TestModuleBase extends TestBase {
 	protected static MongoConnection CONN;
 
 	
-	protected static ObjectMapper MAPPER;
-	@BeforeClass
-	public static void setUpMapper() {
-		MAPPER = new ObjectMapper();
-		MAPPER.setSerializationInclusion(Include.NON_NULL);
-	}
+	protected static ObjectMapper MAPPER = TestData.getMapper();
 	
 	@BeforeClass
 	public static void startHttpServer() {

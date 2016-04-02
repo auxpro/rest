@@ -100,13 +100,22 @@ public class TestData {
 	private static int USER_ID = 0;
 
 	public static UserBean getNextUser() {
+		return fillNextUser(new UserBean());
+	}
+	public static UserBean fillNextUser(UserBean bean) {
 		String name = USER_NAME + USER_ID++;
-		UserBean bean = new UserBean();
 		bean.setName(name);
 		bean.setPassword(name);
 		bean.setEmail(name + "@" + name + ".com");
 		bean.setActive(true);
 		bean.setRoles(new String[0]);
+		return bean;
+	}
+	public static AuxiliaryBean getNextAuxiliary() {
+		AuxiliaryBean bean = (AuxiliaryBean)fillNextUser(new AuxiliaryBean());
+		bean.setFirstName("first " + bean.getName());
+		bean.setLastName("last " + bean.getName());
+		bean.setPhone("phone " + bean.getName());
 		return bean;
 	}
 
