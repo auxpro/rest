@@ -1,6 +1,7 @@
 package module.service.users;
 
 import org.ap.web.internal.APException;
+import org.ap.web.internal.EUserType;
 import org.ap.web.rest.entity.BeanConverter;
 import org.ap.web.rest.entity.UserBean;
 import org.ap.web.service.users.UsersMongoService;
@@ -71,17 +72,17 @@ public class UsersMongoServiceTest extends MongoServiceTestBase {
 	}
 	@Test
 	public void testV_CountUsers() throws APException {
-		TestCase.assertEquals(5, _svc.getUsers().size());
+		TestCase.assertEquals(6, _svc.getUsers().size());
 	}
 	@Test
 	public void testV_CreateUser() throws Exception {
 		int number = _svc.getUsers().size();
 		UserBean user = new UserBean();
-		user.setName("newuser");
-		user.setName("newuser@newuser.com");
-		user.setPassword("newuserpass");
+		user.setName("newuserM");
+		user.setEmail("newuserM@newuser.com");
+		user.setPassword("newuserMpass");
 		user.setActive(true);
-		user.setRoles(new String[] {"adv"});
+		user.setType(EUserType.SERVICE.getId());
 		UserBean created = BeanConverter.convertToUser(_svc.createUser(BeanConverter.convertToDocument(user)));
 		AssertHelper.assertUser(user, created);
 		TestCase.assertEquals(number + 1, _svc.getUsers().size());

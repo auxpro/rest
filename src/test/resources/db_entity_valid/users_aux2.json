@@ -3,7 +3,7 @@
 	"password":"user2pwd",
 	"email":"user2@user2.fr",
 	"active":false,
-	"roles":["aux"],
+	"type":"auxiliary",
 	"firstName": "Second",
 	"lastName": "Auxiliaire",
 	"phone":"02 02 02 02 02",

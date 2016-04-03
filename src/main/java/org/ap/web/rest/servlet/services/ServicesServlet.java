@@ -48,9 +48,9 @@ public class ServicesServlet extends ServletBase implements IServicesServlet {
 	@Override
 	public Response createServiceJSON(SecurityContext sc, ServiceBean bean) {
 		try {
-			Document aux = BeanConverter.convertToDocument(bean);
-			aux = _service.createUser(aux);
-			bean = BeanConverter.convertToService(aux);
+			Document sad = BeanConverter.convertToDocument(bean);
+			sad = _service.createUser(sad);
+			bean = BeanConverter.convertToService(sad);
 			return Response.status(201).entity(bean, resolveAnnotations(sc, bean)).build();
 		} catch (APException e) {
 			return sendException(e);

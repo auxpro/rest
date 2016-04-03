@@ -14,7 +14,7 @@ public class UserBean {
 	private String password;
 	private String email;
 	private boolean active;
-	private String[] roles;
+	private String type;
 
 	/* CONSTRUCTORS */
 	
@@ -38,7 +38,6 @@ public class UserBean {
 	public boolean getActive() { return active; }
 	public void setActive(boolean active) { this.active = active; }
 	
-	@PrivateInformation
-	public String[] getRoles() { return roles; }
-	public void setRoles(String[] roles) { this.roles = roles; }
+	public String getType() { return type; }
+	public void setType(String type) { this.type = type; }
 }

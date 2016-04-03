@@ -5,10 +5,7 @@ public enum EUserRole {
 	/* MEMBERS */
 	
 	ADMIN,
-	GUEST,
-	AUXILIARY,
-	SERVICE,
-	PREMIUM,
+	AUTHENTICATED,
 	;
 	
 	/* ATTRIBUTES */
@@ -20,6 +17,9 @@ public enum EUserRole {
 	
 	/* METHODS */
 	
+	public String getId() {
+		return name().toLowerCase();
+	}
 	public static EUserRole byId(String id) {
 		if (id == null) return null;
 		for (EUserRole type : EUserRole.values()) {

@@ -4,6 +4,8 @@ import java.security.Principal;
 
 import javax.ws.rs.core.SecurityContext;
 
+import org.ap.web.internal.EUserRole;
+import org.ap.web.internal.EUserType;
 import org.ap.web.rest.entity.UserBean;
 
 public class UserSecurityContext implements SecurityContext, Principal {
@@ -13,6 +15,7 @@ public class UserSecurityContext implements SecurityContext, Principal {
 	private static UserBean getGuestBean() {
 		UserBean guest = new UserBean();
 		guest.setName("guest");
+		guest.setType(EUserType.GUEST.getId());
 		return guest;
 	}
 	public static final UserSecurityContext GUEST = new UserSecurityContext(getGuestBean());
@@ -45,14 +48,15 @@ public class UserSecurityContext implements SecurityContext, Principal {
 	}
 	@Override
 	public boolean isUserInRole(String role) {
-		if (_user.getRoles() == null)
+		EUserRole r = EUserRole.byId(role);
+		switch (r) {
+		case ADMIN:
+			return EUserType.ADMIN.equals(EUserType.byId(_user.getType()));
+		case AUTHENTICATED:
+			return !EUserType.GUEST.equals(EUserType.byId(_user.getType()));
+		default:
 			return false;
-		for (String userrole : _user.getRoles()) {
-			if (userrole.equalsIgnoreCase(role)) {
-				return true;
-			}
 		}
-		return false;
 	}
 	
 	// Principal Implementation //

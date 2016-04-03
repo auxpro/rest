@@ -63,7 +63,7 @@ public class UsersPostRestTest extends RestTestBase {
 		TestCase.assertEquals(bean.getName(), response.getName());
 		TestCase.assertEquals(bean.getEmail(), response.getEmail());
 		TestCase.assertEquals(bean.getActive(), response.getActive());
-		TestCase.assertEquals(bean.getRoles().length, response.getRoles().length);
+		TestCase.assertEquals(bean.getType(), response.getType());
 		TestCase.assertNull(response.getPassword());
 	}
 }

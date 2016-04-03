@@ -8,7 +8,7 @@ public class MongoConstants {
 		public static final String EMAIL    = "email";
 		public static final String PASSWORD = "password";
 		public static final String ACTIVE   = "active";
-		public static final String ROLES    = "roles";
+		public static final String TYPE     = "type";
 	}
 	
 	public static class Auxiliaries extends Users {

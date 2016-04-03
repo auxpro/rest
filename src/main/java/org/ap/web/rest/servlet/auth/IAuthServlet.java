@@ -1,5 +1,6 @@
 package org.ap.web.rest.servlet.auth;
 
+import javax.annotation.security.PermitAll;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -24,6 +25,7 @@ import org.ap.web.rest.entity.UserBean;
  *  - /auth/recover         POST > create a request for password reset
  *  - /auth/recover/{token} GET  > validates a password reset request 
  */
+@PermitAll
 public interface IAuthServlet {
 	
 	@GET

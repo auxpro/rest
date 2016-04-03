@@ -2,6 +2,7 @@ package module.rest.auth;
 
 import javax.ws.rs.core.Response;
 
+import org.ap.web.internal.EUserType;
 import org.ap.web.rest.entity.UserBean;
 import org.ap.web.rest.servlet.auth.AuthServlet;
 import org.junit.Test;
@@ -34,7 +35,7 @@ public class AuthGetRestTest extends RestTestBase {
 		UserBean userAdmin = TestData.getUserFromJson("users_admin.json");
 		UserBean user = prepare("", userAdmin.getName(), userAdmin.getPassword()).get(UserBean.class);
 		TestCase.assertEquals("admin", user.getName());
-		TestCase.assertEquals(1, user.getRoles().length);
+		TestCase.assertEquals(EUserType.ADMIN.getId(), user.getType());
 		TestCase.assertNull(user.getPassword());
 	}
 	@Test
@@ -42,7 +43,7 @@ public class AuthGetRestTest extends RestTestBase {
 		UserBean userAux1 = TestData.getAuxiliaryFromJson("users_aux1.json");
 		UserBean user = prepare("", userAux1.getName(), userAux1.getPassword()).get(UserBean.class);
 		TestCase.assertEquals("user1", user.getName());
-		TestCase.assertEquals(1, user.getRoles().length);
+		TestCase.assertEquals(EUserType.AUXILIARY.getId(), user.getType());
 		TestCase.assertNull(user.getPassword());
 	}
 }

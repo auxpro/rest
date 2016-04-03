@@ -39,11 +39,13 @@ public interface IUsersServlet {
 	public Response createUserJSON(@Context SecurityContext sc, UserBean user);
 	
 	@GET
+	@RolesAllowed("authenticated")
 	@Path("{userId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public Response getUserJSON(@Context SecurityContext sc, @PathParam("userId") final String id);
 
 	@PUT
+	@RolesAllowed("authenticated")
 	@Path("{userId}")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})

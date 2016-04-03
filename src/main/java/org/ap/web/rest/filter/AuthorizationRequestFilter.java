@@ -37,20 +37,13 @@ public class AuthorizationRequestFilter implements ContainerRequestFilter {
 
 	@Override
 	public void filter(ContainerRequestContext requestContext) throws WebApplicationException {
-		// Exclude options call for chrome support
+		// Let OPTIONS call pass through
 		if (requestContext.getMethod().equals("OPTIONS")) return;
-		// Exclude user creation request and helloworld
-		if ((requestContext.getUriInfo().getPath().startsWith("auth") && requestContext.getMethod().equals("POST")) ||
-				(requestContext.getUriInfo().getPath().startsWith("auxiliaries") && requestContext.getMethod().equals("POST")) ||
-				(requestContext.getUriInfo().getPath().startsWith("services") && requestContext.getMethod().equals("POST")) ||
-				(requestContext.getUriInfo().getPath().startsWith("hello"))) {
-			requestContext.setSecurityContext(UserSecurityContext.GUEST);
+		// Filter out all other request
+		String header = requestContext.getHeaderString(HEADER);
+		if (header == null) {
+			throw new WebApplicationException(Status.UNAUTHORIZED);
 		} else {
-			// Filter out all other request
-			String header = requestContext.getHeaderString(HEADER);
-			if (header == null) {
-				throw new WebApplicationException(Status.UNAUTHORIZED);
-			}
 			try {
 				String[] credentials = Encoder.decodeBasicAuth(header);
 				if(credentials == null || credentials.length != 2){

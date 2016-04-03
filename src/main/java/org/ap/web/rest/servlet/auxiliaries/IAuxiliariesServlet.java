@@ -31,18 +31,19 @@ public interface IAuxiliariesServlet {
 	@Produces({MediaType.APPLICATION_JSON})
 	public Response getAuxiliariesJSON(@Context SecurityContext sc);
 	
-	
 	@POST
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
 	public Response createAuxiliaryJSON(@Context SecurityContext sc, AuxiliaryBean auxiliary);
 	
 	@GET
+	@RolesAllowed("authenticated")
 	@Path("{auxId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public Response getAuxiliaryJSON(@Context SecurityContext sc, @PathParam("auxId") final String id);
 
 	@PUT
+	@RolesAllowed("authenticated")
 	@Path("{auxId}")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})

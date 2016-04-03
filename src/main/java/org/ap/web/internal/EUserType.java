@@ -19,6 +19,10 @@ public enum EUserType {
 	
 	/* METHODS */
 	
+	public String getId() {
+		return name().toLowerCase();
+	}
+	
 	public static EUserType byId(String id) {
 		if (id == null) return null;
 		for (EUserType type : EUserType.values()) {

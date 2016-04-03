@@ -3,7 +3,7 @@
 	"password":"society1pwd",
 	"email":"society1@society1.fr",
 	"active":true,
-	"roles":["sad"],
+	"type":"service",
 	"society": "Societe 1",
 	"phone":"10 10 10 10 10",
 	"address": {

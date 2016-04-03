@@ -31,18 +31,19 @@ public interface IServicesServlet {
 	@Produces({MediaType.APPLICATION_JSON})
 	public Response getServicesJSON(@Context SecurityContext sc);
 	
-	
 	@POST
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
 	public Response createServiceJSON(@Context SecurityContext sc, ServiceBean service);
 	
 	@GET
+	@RolesAllowed("authenticated")
 	@Path("{servId}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public Response getServiceJSON(@Context SecurityContext sc, @PathParam("servId") final String id);
 
 	@PUT
+	@RolesAllowed("authenticated")
 	@Path("{servId}")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})

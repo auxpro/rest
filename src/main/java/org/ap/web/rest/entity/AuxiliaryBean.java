@@ -2,6 +2,8 @@ package org.ap.web.rest.entity;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.ap.web.internal.EUserType;
+
 @XmlRootElement
 public class AuxiliaryBean extends UserBean {
 	
@@ -14,7 +16,9 @@ public class AuxiliaryBean extends UserBean {
 
 	/* CONSTRUCTORS */
 	
-	public AuxiliaryBean() {}
+	public AuxiliaryBean() {
+		setType(EUserType.AUXILIARY.getId());
+	}
 	
 	/* METHODS */
 	

@@ -1,9 +1,9 @@
 package org.ap.web.rest.entity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.ap.web.internal.APException;
+import org.ap.web.internal.EUserType;
 import org.ap.web.service.MongoConstants;
 import org.bson.Document;
 
@@ -31,7 +31,7 @@ public class BeanConverter {
 		bean.setEmail(user.getString(MongoConstants.Users.EMAIL));
 		//!\\ PASSWORD IS NEVER LOADED FROM DB
 		bean.setActive(user.getBoolean(MongoConstants.Users.ACTIVE));
-		bean.setRoles(getArray(user, MongoConstants.Users.ROLES));
+		bean.setType(EUserType.byId(user.getString(MongoConstants.Users.TYPE)).getId());
 		return bean;
 	}
 	public static Document convertToDocument(UserBean user){
@@ -40,7 +40,7 @@ public class BeanConverter {
 				.append(MongoConstants.Users.EMAIL, user.getEmail())
 				.append(MongoConstants.Users.PASSWORD, user.getPassword())
 				.append(MongoConstants.Users.ACTIVE, user.getActive())
-				.append(MongoConstants.Users.ROLES, convertToArrayList(user.getRoles()));
+				.append(MongoConstants.Users.TYPE, EUserType.byId(user.getType()).getId());
 	}
 	
 	public static AuxiliaryBean[] convertToAuxiliaries(List<Document> auxs) {
@@ -56,7 +56,6 @@ public class BeanConverter {
 		bean.setEmail(aux.getString(MongoConstants.Users.EMAIL));
 		//!\\ PASSWORD IS NEVER LOADED FROM DB
 		bean.setActive(aux.getBoolean(MongoConstants.Users.ACTIVE));
-		bean.setRoles(getArray(aux, MongoConstants.Users.ROLES));
 		bean.setFirstName(aux.getString(MongoConstants.Auxiliaries.FIRST_NAME));
 		bean.setLastName(aux.getString(MongoConstants.Auxiliaries.LAST_NAME));
 		bean.setPhone(aux.getString(MongoConstants.Auxiliaries.PHONE));
@@ -71,7 +70,7 @@ public class BeanConverter {
 				.append(MongoConstants.Auxiliaries.EMAIL, aux.getEmail())
 				.append(MongoConstants.Auxiliaries.PASSWORD, aux.getPassword())
 				.append(MongoConstants.Auxiliaries.ACTIVE, aux.getActive())
-				.append(MongoConstants.Auxiliaries.ROLES, convertToArrayList(aux.getRoles()))
+				.append(MongoConstants.Auxiliaries.TYPE, EUserType.byId(aux.getType()).getId())
 				.append(MongoConstants.Auxiliaries.FIRST_NAME, aux.getFirstName())
 				.append(MongoConstants.Auxiliaries.LAST_NAME, aux.getLastName())
 				.append(MongoConstants.Auxiliaries.PHONE, aux.getPhone());		
@@ -90,7 +89,6 @@ public class BeanConverter {
 		bean.setEmail(sad.getString(MongoConstants.Services.EMAIL));
 		//!\\ PASSWORD IS NEVER LOADED FROM DB
 		bean.setActive(sad.getBoolean(MongoConstants.Services.ACTIVE));
-		bean.setRoles(getArray(sad, MongoConstants.Services.ROLES));
 		bean.setSociety(sad.getString(MongoConstants.Services.SOCIETY));
 		bean.setPhone(sad.getString(MongoConstants.Services.PHONE));
 		return bean;
@@ -101,11 +99,12 @@ public class BeanConverter {
 				.append(MongoConstants.Services.EMAIL, sad.getEmail())
 				.append(MongoConstants.Services.PASSWORD, sad.getPassword())
 				.append(MongoConstants.Services.ACTIVE, sad.getActive())
-				.append(MongoConstants.Services.ROLES, convertToArrayList(sad.getRoles()))
+				.append(MongoConstants.Services.TYPE, EUserType.byId(sad.getType()).getId())
 				.append(MongoConstants.Services.SOCIETY, sad.getSociety())
 				.append(MongoConstants.Services.PHONE, sad.getPhone());		
 	}
 	
+	/*
 	private static List<String> convertToArrayList(String[] in){
 		List<String> list = new ArrayList<String>();
 		if (in == null)
@@ -120,6 +119,7 @@ public class BeanConverter {
 		ArrayList<String> list = (ArrayList<String>)doc.get(key);
 		System.out.println(list);
 		return list.toArray(new String[list.size()]);
-	}	
+	}
+	*/
 
 }

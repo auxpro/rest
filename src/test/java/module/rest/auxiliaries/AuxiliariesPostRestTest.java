@@ -25,7 +25,7 @@ public class AuxiliariesPostRestTest extends RestTestBase {
 	/* Negative Testing */
 
 	@Test
-	public void testI_postAuxiliaries_sameName() throws Exception {
+	public void testI_sameName() throws Exception {
 		UserBean userAdmin = TestData.getUserFromJson("users_admin.json");
 		AuxiliaryBean bean = TestData.getNextAuxiliary();
 		AuxiliaryBean bean2 = TestData.getNextAuxiliary();
@@ -36,7 +36,7 @@ public class AuxiliariesPostRestTest extends RestTestBase {
 		TestCase.assertTrue(response.hasEntity());
 	}
 	@Test
-	public void testI_postAuxiliaries_sameEmail() throws Exception {
+	public void testI_sameEmail() throws Exception {
 		UserBean userAdmin = TestData.getUserFromJson("users_admin.json");
 		AuxiliaryBean bean = TestData.getNextAuxiliary();
 		AuxiliaryBean bean2 = TestData.getNextAuxiliary();
@@ -50,10 +50,17 @@ public class AuxiliariesPostRestTest extends RestTestBase {
 	/* Positive Testing */
 	
 	@Test
-	public void testV_postAuxiliaries_asAdmin() throws Exception {
+	public void testV_asAdmin() throws Exception {
 		UserBean userAdmin = TestData.getUserFromJson("users_admin.json");
 		AuxiliaryBean bean = TestData.getNextAuxiliary();
 		AuxiliaryBean response = prepare("", userAdmin.getName(), userAdmin.getPassword()).post(Entity.entity(MAPPER.writeValueAsString(bean), MediaType.APPLICATION_JSON), AuxiliaryBean.class);
 		AssertHelper.assertAuxiliary(bean, response);
+	}
+	@Test
+	public void testV_asGuest() throws Exception {
+		UserBean userGuest = TestData.getUserFromJson("users_guest.json");
+		AuxiliaryBean bean = TestData.getNextAuxiliary();
+		Response response = prepare("", userGuest.getName(), userGuest.getPassword()).post(Entity.entity(MAPPER.writeValueAsString(bean), MediaType.APPLICATION_JSON));
+		TestCase.assertEquals(201, response.getStatus());
 	}
 }

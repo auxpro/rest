@@ -77,7 +77,6 @@ public class AuxiliaryGetRestTest extends RestTestBase {
 		userAux1.setPassword(null);
 		userAux1.setEmail(null);
 		userAux1.setActive(false);
-		userAux1.setRoles(null);
 		AssertHelper.assertAuxiliary(userAux1, userAux);
 	}
 }

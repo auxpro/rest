@@ -2,6 +2,8 @@ package org.ap.web.rest.entity;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.ap.web.internal.EUserType;
+
 @XmlRootElement
 public class ServiceBean extends UserBean {
 	
@@ -13,7 +15,9 @@ public class ServiceBean extends UserBean {
 
 	/* CONSTRUCTORS */
 	
-	public ServiceBean() {}
+	public ServiceBean() {
+		setType(EUserType.SERVICE.getId());
+	}
 	
 	/* METHODS */
 	

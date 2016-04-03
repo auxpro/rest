@@ -30,7 +30,7 @@ public class AuxiliariesGetRestTest extends RestTestBase {
 	/* Positive Testing */
 	
 	@Test
-	public void testV_getUsers() throws Exception {
+	public void testV_asAdmin() throws Exception {
 		UserBean userAdmin = TestData.getUserFromJson("users_admin.json");
 		String responseMsg = prepare("", userAdmin.getName(), userAdmin.getPassword()).get(String.class);
 		TestCase.assertTrue(responseMsg.contains("\"name\":\"user1\""));
@@ -38,7 +38,14 @@ public class AuxiliariesGetRestTest extends RestTestBase {
 		TestCase.assertFalse(responseMsg.contains("\"password\""));
 	}
 	@Test
-	public void testV_getUsers_response() throws Exception {
+	public void testV_asGuest() throws Exception {
+		UserBean userGuest = TestData.getUserFromJson("users_guest.json");
+		Response rsp = prepare("", userGuest.getName(), userGuest.getPassword()).get();
+		TestCase.assertEquals(200, rsp.getStatus());
+		TestCase.assertTrue(rsp.hasEntity());
+	}
+	@Test
+	public void testV_asAdmin_responseStatus() throws Exception {
 		UserBean userAdmin = TestData.getUserFromJson("users_admin.json");
 		Response rsp = prepare("", userAdmin.getName(), userAdmin.getPassword()).get();
 		TestCase.assertEquals(200, rsp.getStatus());

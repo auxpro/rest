@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.ws.rs.core.UriBuilder;
 
+import org.ap.web.internal.EUserType;
 import org.ap.web.internal.FileHelper;
 import org.ap.web.rest.entity.AuxiliaryBean;
 import org.ap.web.rest.entity.BeanConverter;
@@ -108,7 +109,7 @@ public class TestData {
 		bean.setPassword(name);
 		bean.setEmail(name + "@" + name + ".com");
 		bean.setActive(true);
-		bean.setRoles(new String[0]);
+		bean.setType(EUserType.AUXILIARY.getId());
 		return bean;
 	}
 	public static AuxiliaryBean getNextAuxiliary() {
@@ -116,6 +117,14 @@ public class TestData {
 		bean.setFirstName("first " + bean.getName());
 		bean.setLastName("last " + bean.getName());
 		bean.setPhone("phone " + bean.getName());
+		bean.setType(EUserType.AUXILIARY.getId());
+		return bean;
+	}
+	public static ServiceBean getNextService() {
+		ServiceBean bean = (ServiceBean)fillNextUser(new ServiceBean());
+		bean.setSociety("society " + bean.getName());
+		bean.setPhone("phone " + bean.getName());
+		bean.setType(EUserType.SERVICE.getId());
 		return bean;
 	}
 
