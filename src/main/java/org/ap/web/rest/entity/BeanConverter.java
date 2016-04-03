@@ -77,6 +77,35 @@ public class BeanConverter {
 				.append(MongoConstants.Auxiliaries.PHONE, aux.getPhone());		
 	}
 	
+	public static ServiceBean[] convertToServices(List<Document> sads) {
+		ServiceBean[] beans = new ServiceBean[sads.size()];
+		for (int i = 0 ; i < beans.length ; i++) {
+			beans[i] = convertToService(sads.get(i));
+		}
+		return beans;
+	}
+	public static ServiceBean convertToService(Document sad) {
+		ServiceBean bean = new ServiceBean();
+		bean.setName(sad.getString(MongoConstants.Services.NAME));
+		bean.setEmail(sad.getString(MongoConstants.Services.EMAIL));
+		//!\\ PASSWORD IS NEVER LOADED FROM DB
+		bean.setActive(sad.getBoolean(MongoConstants.Services.ACTIVE));
+		bean.setRoles(getArray(sad, MongoConstants.Services.ROLES));
+		bean.setSociety(sad.getString(MongoConstants.Services.SOCIETY));
+		bean.setPhone(sad.getString(MongoConstants.Services.PHONE));
+		return bean;
+	}
+	public static Document convertToDocument(ServiceBean sad){
+		return new Document()
+				.append(MongoConstants.Services.NAME, sad.getName())
+				.append(MongoConstants.Services.EMAIL, sad.getEmail())
+				.append(MongoConstants.Services.PASSWORD, sad.getPassword())
+				.append(MongoConstants.Services.ACTIVE, sad.getActive())
+				.append(MongoConstants.Services.ROLES, convertToArrayList(sad.getRoles()))
+				.append(MongoConstants.Services.SOCIETY, sad.getSociety())
+				.append(MongoConstants.Services.PHONE, sad.getPhone());		
+	}
+	
 	private static List<String> convertToArrayList(String[] in){
 		List<String> list = new ArrayList<String>();
 		if (in == null)

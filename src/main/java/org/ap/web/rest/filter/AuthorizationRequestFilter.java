@@ -40,23 +40,28 @@ public class AuthorizationRequestFilter implements ContainerRequestFilter {
 		// Exclude options call for chrome support
 		if (requestContext.getMethod().equals("OPTIONS")) return;
 		// Exclude user creation request and helloworld
-		if (requestContext.getUriInfo().getPath().startsWith("auth") && requestContext.getMethod().equals("POST")) return;
-		if (requestContext.getUriInfo().getPath().startsWith("hello")) return;
-		// Filter out all other request
-		String header = requestContext.getHeaderString(HEADER);
-		if (header == null) {
-			throw new WebApplicationException(Status.UNAUTHORIZED);
-		}
-		try {
-			String[] credentials = Encoder.decodeBasicAuth(header);
-			if(credentials == null || credentials.length != 2){
+		if ((requestContext.getUriInfo().getPath().startsWith("auth") && requestContext.getMethod().equals("POST")) ||
+				(requestContext.getUriInfo().getPath().startsWith("auxiliaries") && requestContext.getMethod().equals("POST")) ||
+				(requestContext.getUriInfo().getPath().startsWith("services") && requestContext.getMethod().equals("POST")) ||
+				(requestContext.getUriInfo().getPath().startsWith("hello"))) {
+			requestContext.setSecurityContext(UserSecurityContext.GUEST);
+		} else {
+			// Filter out all other request
+			String header = requestContext.getHeaderString(HEADER);
+			if (header == null) {
 				throw new WebApplicationException(Status.UNAUTHORIZED);
 			}
-			UserBean user = BeanConverter.convertToUser(_service.checkUser(credentials[0], credentials[1]));
-			
-			requestContext.setSecurityContext(new UserSecurityContext(user));
-		} catch (APException e) {
-			throw new WebApplicationException(Status.UNAUTHORIZED);
+			try {
+				String[] credentials = Encoder.decodeBasicAuth(header);
+				if(credentials == null || credentials.length != 2){
+					throw new WebApplicationException(Status.UNAUTHORIZED);
+				}
+				UserBean user = BeanConverter.convertToUser(_service.checkUser(credentials[0], credentials[1]));
+
+				requestContext.setSecurityContext(new UserSecurityContext(user));
+			} catch (APException e) {
+				throw new WebApplicationException(Status.UNAUTHORIZED);
+			}
 		}
 	}
 }

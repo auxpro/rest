@@ -8,6 +8,15 @@ import org.ap.web.rest.entity.UserBean;
 
 public class UserSecurityContext implements SecurityContext, Principal {
 	
+	/* STATIC */
+	
+	private static UserBean getGuestBean() {
+		UserBean guest = new UserBean();
+		guest.setName("guest");
+		return guest;
+	}
+	public static final UserSecurityContext GUEST = new UserSecurityContext(getGuestBean());
+	
 	/* ATTRIBUTES */
 	
 	private UserBean _user;
