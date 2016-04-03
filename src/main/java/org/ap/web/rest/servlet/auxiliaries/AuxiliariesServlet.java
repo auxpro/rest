@@ -1,10 +1,14 @@
 package org.ap.web.rest.servlet.auxiliaries;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
 import org.ap.web.internal.APException;
+import org.ap.web.internal.EUserType;
 import org.ap.web.rest.entity.AuxiliaryBean;
 import org.ap.web.rest.entity.BeanConverter;
 import org.ap.web.rest.servlet.ServletBase;
@@ -39,7 +43,9 @@ public class AuxiliariesServlet extends ServletBase implements IAuxiliariesServl
 	@Override
 	public Response getAuxiliariesJSON(SecurityContext sc) {
 		try {
-			AuxiliaryBean[] users = BeanConverter.convertToAuxiliaries(_service.getUsers());
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("type", EUserType.AUXILIARY.getId());
+			AuxiliaryBean[] users = BeanConverter.convertToAuxiliaries(_service.getUsers(map));
 			return Response.status(200).entity(users, resolveAnnotations(sc)).build();
 		} catch (APException e) {
 			return sendException(e);

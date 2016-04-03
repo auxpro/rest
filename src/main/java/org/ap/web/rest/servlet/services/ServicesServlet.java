@@ -1,10 +1,14 @@
 package org.ap.web.rest.servlet.services;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
 import org.ap.web.internal.APException;
+import org.ap.web.internal.EUserType;
 import org.ap.web.rest.entity.BeanConverter;
 import org.ap.web.rest.entity.ServiceBean;
 import org.ap.web.rest.servlet.ServletBase;
@@ -39,7 +43,9 @@ public class ServicesServlet extends ServletBase implements IServicesServlet {
 	@Override
 	public Response getServicesJSON(SecurityContext sc) {
 		try {
-			ServiceBean[] users = BeanConverter.convertToServices(_service.getUsers());
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("type", EUserType.SERVICE.getId());
+			ServiceBean[] users = BeanConverter.convertToServices(_service.getUsers(map));
 			return Response.status(200).entity(users, resolveAnnotations(sc)).build();
 		} catch (APException e) {
 			return sendException(e);

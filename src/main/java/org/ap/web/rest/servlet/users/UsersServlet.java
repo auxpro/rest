@@ -1,5 +1,7 @@
 package org.ap.web.rest.servlet.users;
 
+import java.util.HashMap;
+
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
@@ -39,7 +41,7 @@ public class UsersServlet extends ServletBase implements IUsersServlet {
 	@Override
 	public Response getUsersJSON(SecurityContext sc) {
 		try {
-			UserBean[] users = BeanConverter.convertToUsers(_service.getUsers());
+			UserBean[] users = BeanConverter.convertToUsers(_service.getUsers(new HashMap<String, Object>()));
 			return Response.status(200).entity(users, resolveAnnotations(sc)).build();
 		} catch (APException e) {
 			return sendException(e);

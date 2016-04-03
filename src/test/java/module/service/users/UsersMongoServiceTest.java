@@ -1,5 +1,7 @@
 package module.service.users;
 
+import java.util.HashMap;
+
 import org.ap.web.internal.APException;
 import org.ap.web.internal.EUserType;
 import org.ap.web.rest.entity.BeanConverter;
@@ -72,11 +74,11 @@ public class UsersMongoServiceTest extends MongoServiceTestBase {
 	}
 	@Test
 	public void testV_CountUsers() throws APException {
-		TestCase.assertEquals(6, _svc.getUsers().size());
+		TestCase.assertEquals(6, _svc.getUsers(new HashMap<String, Object>()).size());
 	}
 	@Test
 	public void testV_CreateUser() throws Exception {
-		int number = _svc.getUsers().size();
+		int number = _svc.getUsers(new HashMap<String, Object>()).size();
 		UserBean user = new UserBean();
 		user.setName("newuserM");
 		user.setEmail("newuserM@newuser.com");
@@ -85,7 +87,7 @@ public class UsersMongoServiceTest extends MongoServiceTestBase {
 		user.setType(EUserType.SERVICE.getId());
 		UserBean created = BeanConverter.convertToUser(_svc.createUser(BeanConverter.convertToDocument(user)));
 		AssertHelper.assertUser(user, created);
-		TestCase.assertEquals(number + 1, _svc.getUsers().size());
+		TestCase.assertEquals(number + 1, _svc.getUsers(new HashMap<String, Object>()).size());
 	}
 	@Test
 	public void testV_UpdateUser() throws Exception {

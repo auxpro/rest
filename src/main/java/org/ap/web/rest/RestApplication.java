@@ -27,6 +27,7 @@ public class RestApplication extends ResourceConfig {
 		
 		packages("org.ap.web.rest.servlet");
 		register(JacksonFeature.class);
+		//register(JacksonJsonProvider.class);
 		register(AuthorizationRequestFilter.class);
 		register(HeadersResponseFilter.class);
 		register(SecurityEntityFilteringFeature.class);

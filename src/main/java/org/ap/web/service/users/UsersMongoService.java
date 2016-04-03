@@ -2,6 +2,7 @@ package org.ap.web.service.users;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.ap.web.internal.APException;
 import org.ap.web.service.MongoConstants;
@@ -59,9 +60,10 @@ public class UsersMongoService implements IUsersService {
 			return document;
 		}
 	}
-	@Override public List<Document> getUsers() throws APException {
+	@Override public List<Document> getUsers(Map<String, Object> filters) throws APException {
 		final List<Document> result = new ArrayList<Document>();
-		FindIterable<Document> iterable = _conn.getCollection(MongoConstants.Users.COLLECTION).find();
+		Document filter = new Document(filters);
+		FindIterable<Document> iterable = _conn.getCollection(MongoConstants.Users.COLLECTION).find(filter);
 		iterable.forEach(new Block<Document>() {
 			@Override
 			public void apply(final Document document) {

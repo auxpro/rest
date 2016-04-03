@@ -2,6 +2,7 @@ package module.rest.services;
 
 import javax.ws.rs.core.Response;
 
+import org.ap.web.rest.entity.ServiceBean;
 import org.ap.web.rest.entity.UserBean;
 import org.ap.web.rest.servlet.services.ServicesServlet;
 import org.junit.Test;
@@ -35,13 +36,5 @@ public class ServicesGetRestTest extends RestTestBase {
 		Response rsp = prepare("", userAdmin.getName(), userAdmin.getPassword()).get();
 		TestCase.assertEquals(200, rsp.getStatus());
 		TestCase.assertTrue(rsp.hasEntity());
-	}
-	@Test
-	public void testV_asAdmin() throws Exception {
-		UserBean userAdmin = TestData.getUserFromJson("users_admin.json");
-		String responseMsg = prepare("", userAdmin.getName(), userAdmin.getPassword()).get(String.class);
-		TestCase.assertTrue(responseMsg.contains("\"name\":\"user1\""));
-		TestCase.assertTrue(responseMsg.contains("\"name\":\"user2\""));
-		TestCase.assertFalse(responseMsg.contains("\"password\""));
 	}
 }
