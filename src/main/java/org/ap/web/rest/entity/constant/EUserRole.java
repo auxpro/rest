@@ -1,4 +1,4 @@
-package org.ap.web.internal;
+package org.ap.web.rest.entity.constant;
 
 public enum EUserRole {
 

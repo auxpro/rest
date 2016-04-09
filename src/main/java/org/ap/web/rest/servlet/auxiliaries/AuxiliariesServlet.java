@@ -8,9 +8,9 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
 import org.ap.web.internal.APException;
-import org.ap.web.internal.EUserType;
 import org.ap.web.rest.entity.AuxiliaryBean;
 import org.ap.web.rest.entity.BeanConverter;
+import org.ap.web.rest.entity.constant.EUserType;
 import org.ap.web.rest.servlet.ServletBase;
 import org.ap.web.service.users.IUsersService;
 import org.ap.web.service.users.UsersMongoService;

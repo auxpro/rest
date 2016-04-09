@@ -2,8 +2,8 @@ package module.rest.auth;
 
 import javax.ws.rs.core.Response;
 
-import org.ap.web.internal.EUserType;
 import org.ap.web.rest.entity.UserBean;
+import org.ap.web.rest.entity.constant.EUserType;
 import org.ap.web.rest.servlet.auth.AuthServlet;
 import org.junit.Test;
 

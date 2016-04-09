@@ -7,12 +7,12 @@ import java.util.List;
 
 import javax.ws.rs.core.UriBuilder;
 
-import org.ap.web.internal.EUserType;
-import org.ap.web.internal.FileHelper;
 import org.ap.web.rest.entity.AuxiliaryBean;
 import org.ap.web.rest.entity.BeanConverter;
 import org.ap.web.rest.entity.ServiceBean;
 import org.ap.web.rest.entity.UserBean;
+import org.ap.web.rest.entity.constant.EUserCivility;
+import org.ap.web.rest.entity.constant.EUserType;
 import org.ap.web.service.MongoConnection;
 import org.ap.web.service.MongoConstants;
 import org.bson.Document;
@@ -114,6 +114,7 @@ public class TestData {
 	}
 	public static AuxiliaryBean getNextAuxiliary() {
 		AuxiliaryBean bean = (AuxiliaryBean)fillNextUser(new AuxiliaryBean());
+		bean.setCivility(EUserCivility.MR.getId());
 		bean.setFirstName("first " + bean.getName());
 		bean.setLastName("last " + bean.getName());
 		bean.setPhone("phone " + bean.getName());

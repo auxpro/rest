@@ -17,6 +17,7 @@ public class AssertHelper {
 	
 	public static void assertAuxiliary(AuxiliaryBean expected, AuxiliaryBean actual) {
 		assertUser(expected, actual);
+		TestCase.assertEquals(expected.getCivility(), actual.getCivility());
 		TestCase.assertEquals(expected.getFirstName(), actual.getFirstName());
 		TestCase.assertEquals(expected.getLastName(), actual.getLastName());
 		TestCase.assertEquals(expected.getPhone(), actual.getPhone());

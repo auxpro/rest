@@ -2,7 +2,7 @@ package org.ap.web.rest.entity;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.ap.web.internal.EUserType;
+import org.ap.web.rest.entity.constant.EUserType;
 
 @XmlRootElement
 public class ServiceBean extends UserBean {

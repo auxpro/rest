@@ -4,6 +4,7 @@
 	"email":"user1@user1.fr",
 	"active":false,
 	"type":"auxiliary",
+	"civility":"Mr",
 	"firstName": "Premier",
 	"lastName": "Auxiliaire",
 	"phone":"01 01 01 01 01",

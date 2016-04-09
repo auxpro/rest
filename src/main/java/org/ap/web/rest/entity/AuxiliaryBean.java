@@ -2,13 +2,15 @@ package org.ap.web.rest.entity;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.ap.web.internal.EUserType;
+import org.ap.web.rest.entity.constant.EUserCivility;
+import org.ap.web.rest.entity.constant.EUserType;
 
 @XmlRootElement
 public class AuxiliaryBean extends UserBean {
 	
 	/* ATTRIBUTES */
 	
+	private EUserCivility civility;
 	private String firstName;
 	private String lastName;
 	private String phone;
@@ -21,6 +23,9 @@ public class AuxiliaryBean extends UserBean {
 	}
 	
 	/* METHODS */
+	
+	public String getCivility() { return civility.getId(); }
+	public void setCivility(String civility) { this.civility = EUserCivility.fromString(civility); }
 	
 	public String getFirstName() { return firstName; }
 	public void setFirstName(String firstname) { this.firstName = firstname; }

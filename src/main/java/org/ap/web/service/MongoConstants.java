@@ -12,6 +12,7 @@ public class MongoConstants {
 	}
 	
 	public static class Auxiliaries extends Users {
+		public static final String CIVILITY   = "civility";
 		public static final String FIRST_NAME = "firstName";
 		public static final String LAST_NAME  = "lastName";
 		public static final String PHONE      = "phone";
