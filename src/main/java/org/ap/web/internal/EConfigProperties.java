@@ -18,6 +18,7 @@ public enum EConfigProperties {
 	DB_NAME ("db_name", "test-db"),
 	DB_USER ("db_user", ""),
 	DB_PASS ("db_pass", ""),
+	DB_PATH ("db_path", "./data/db"),
 	;
 	
 	/* STATIC */
