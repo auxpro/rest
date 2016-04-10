@@ -31,7 +31,6 @@ public enum EConfigProperties {
 			String value = properties.getProperty(prop.getProperty());
 			if (value != null && !value.trim().equals("")) {
 				prop.setValue(value);
-				System.out.println(prop.getProperty() + " " + value);
 			}
 		}
 	}

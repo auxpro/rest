@@ -26,7 +26,7 @@ public class MongoConnection implements IMongoConnection {
 
 	/* CONSTRUCTOR */
 	
-	private MongoConnection(MongoClient client, MongoDatabase db) {
+	public MongoConnection(MongoClient client, MongoDatabase db) {
 		_client = client;
 		_db = db;
 	}

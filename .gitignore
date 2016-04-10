@@ -52,3 +52,7 @@ Temporary Items
 
 #meaven generated files
 target/
+
+#mongo generated files
+mongo/data
+mongo/log
