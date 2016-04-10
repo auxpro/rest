@@ -7,6 +7,8 @@ import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.container.ContainerResponseFilter;
 import javax.ws.rs.core.HttpHeaders;
 
+import org.ap.web.internal.EConfigProperties;
+
 public class HeadersResponseFilter implements ContainerResponseFilter {
 
 	/* STATIC */
@@ -25,7 +27,7 @@ public class HeadersResponseFilter implements ContainerResponseFilter {
 
 	@Override
 	public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext) throws IOException {
-		responseContext.getHeaders().add(ACCESS_CONTROL_ALLOW_ORIGIN, "*");
+		responseContext.getHeaders().add(ACCESS_CONTROL_ALLOW_ORIGIN, EConfigProperties.SERV_ORIGIN.getValue());
 		//responseContext.getHeaders().add("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT, OPTIONS");			
 		responseContext.getHeaders().add(ACCESS_CONTROL_ALLOW_HEADERS, HttpHeaders.AUTHORIZATION);
 		responseContext.getHeaders().add(ACCESS_CONTROL_ALLOW_HEADERS, "Content-type");

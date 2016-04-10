@@ -1,5 +1,6 @@
 package org.ap.web.service;
 
+import org.ap.web.internal.EConfigProperties;
 import org.bson.Document;
 
 import com.mongodb.MongoClient;
@@ -9,15 +10,13 @@ import com.mongodb.client.MongoDatabase;
 public class MongoConnection implements IMongoConnection {
 
 	/* STATIC */
-
-	public static final String HOST = "localhost";
-	public static final int    PORT = 27017;
-	public static final String NAME = "test-db";
 	
-	private static MongoConnection INSTANCE;
+	private static MongoConnection INSTANCE = Factory.open();
 	public static MongoConnection getInstance() {
-		if (INSTANCE == null) { INSTANCE = Factory.open(HOST, PORT, NAME); }
 		return INSTANCE;
+	}
+	public static void reload() {
+		INSTANCE = Factory.open();
 	}
 
 	/* ATTRIBUTES */
@@ -27,11 +26,17 @@ public class MongoConnection implements IMongoConnection {
 
 	/* CONSTRUCTOR */
 	
-	public MongoConnection(MongoClient client, MongoDatabase db) {
+	private MongoConnection(MongoClient client, MongoDatabase db) {
 		_client = client;
 		_db = db;
 	}
-	public static class Factory {
+	private static class Factory {
+		public static MongoConnection open() {
+			String host = EConfigProperties.DB_HOST.getValue();
+			int port = Integer.valueOf(EConfigProperties.DB_PORT.getValue());
+			String db = EConfigProperties.DB_NAME.getValue();
+			return Factory.open(host, port, db);
+		}
 		public static MongoConnection open(String host, int port, String db) {
 			MongoClient client = new MongoClient(host, port);
 			return new MongoConnection(client, client.getDatabase(db));

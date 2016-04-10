@@ -9,9 +9,13 @@ public class ServiceBean extends UserBean {
 	
 	/* ATTRIBUTES */
 	
-	private String society;
 	private String phone;
 	private AddressBean address;
+	
+	private String society;
+	private String social;
+	private String siret;
+	
 
 	/* CONSTRUCTORS */
 	

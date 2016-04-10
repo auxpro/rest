@@ -3,7 +3,7 @@ package org.ap.web.rest.entity;
 import java.util.List;
 
 import org.ap.web.internal.APException;
-import org.ap.web.rest.entity.constant.EUserCivility;
+import org.ap.web.rest.entity.constant.EAuxCivility;
 import org.ap.web.rest.entity.constant.EUserType;
 import org.ap.web.service.MongoConstants;
 import org.bson.Document;
@@ -73,7 +73,7 @@ public class BeanConverter {
 				.append(MongoConstants.Auxiliaries.PASSWORD, aux.getPassword())
 				.append(MongoConstants.Auxiliaries.ACTIVE, aux.getActive())
 				.append(MongoConstants.Auxiliaries.TYPE, EUserType.byId(aux.getType()).getId())
-				.append(MongoConstants.Auxiliaries.CIVILITY, EUserCivility.fromString(aux.getCivility()).getId())
+				.append(MongoConstants.Auxiliaries.CIVILITY, EAuxCivility.fromString(aux.getCivility()).getId())
 				.append(MongoConstants.Auxiliaries.FIRST_NAME, aux.getFirstName())
 				.append(MongoConstants.Auxiliaries.LAST_NAME, aux.getLastName())
 				.append(MongoConstants.Auxiliaries.PHONE, aux.getPhone());		

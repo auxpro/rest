@@ -1,7 +1,10 @@
 package org.ap.web.rest;
 
+import java.io.IOException;
+
 import javax.ws.rs.ApplicationPath;
 
+import org.ap.web.internal.EConfigProperties;
 import org.ap.web.rest.filter.AuthorizationRequestFilter;
 import org.ap.web.rest.filter.HeadersResponseFilter;
 import org.glassfish.jersey.filter.LoggingFilter;
@@ -12,11 +15,6 @@ import org.glassfish.jersey.server.ResourceConfig;
 
 @ApplicationPath("/rest")
 public class RestApplication extends ResourceConfig {
-
-	/* STATIC */
-
-	/** Enables the application logs */
-	public static boolean LOGGING_MODE = true;
 	
 	/* ATTRIBUTES */
 	
@@ -24,6 +22,11 @@ public class RestApplication extends ResourceConfig {
 	
 	/**	 */
 	public RestApplication() {
+		try {
+			EConfigProperties.loadProperties();
+		} catch (IOException e) {
+			System.err.println(e);
+		}
 		
 		packages("org.ap.web.rest.servlet");
 		register(JacksonFeature.class);
@@ -32,9 +35,10 @@ public class RestApplication extends ResourceConfig {
 		register(HeadersResponseFilter.class);
 		register(SecurityEntityFilteringFeature.class);
 		register(EntityFilteringFeature.class);
-		if (LOGGING_MODE) {
+		if (new Boolean(EConfigProperties.SERV_LOGIN.getValue())) {
 			register(LoggingFilter.class);
 		}
+		
 	}
 	
 	/* METHODS */

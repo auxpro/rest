@@ -1,4 +1,4 @@
-package org.ap.web.rest.servlet.usagers;
+package org.ap.web.rest.servlet.missions;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.Consumes;
@@ -25,7 +25,7 @@ import org.ap.web.rest.entity.ServiceBean;
  *  - /services/{servId} PUT    > update an existing service
  *  - /services/{servId} DELETE > delete a service
  */
-public interface IServicesServlet {
+public interface IMissionsServlet {
 
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
