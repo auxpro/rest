@@ -28,20 +28,27 @@ public class BeanConverter {
 	}
 	public static UserBean convertToUser(Document user) {
 		UserBean bean = new UserBean();
+		fillUser(user, bean);
+		return bean;
+	}
+	public static void fillUser(Document user, UserBean bean) {
 		bean.setName(user.getString(MongoConstants.Users.NAME));
 		bean.setEmail(user.getString(MongoConstants.Users.EMAIL));
 		//!\\ PASSWORD IS NEVER LOADED FROM DB
 		bean.setActive(user.getBoolean(MongoConstants.Users.ACTIVE));
+		bean.setTutoSkipped(user.getBoolean(MongoConstants.Users.TUTOSKIPPED));
 		bean.setType(EUserType.byId(user.getString(MongoConstants.Users.TYPE)).getId());
-		return bean;
+		bean.setRegistrationDate(user.getDate(MongoConstants.Users.REGISTRATION));
 	}
 	public static Document convertToDocument(UserBean user){
 		return new Document()
 				.append(MongoConstants.Users.NAME, user.getName())
 				.append(MongoConstants.Users.EMAIL, user.getEmail())
 				.append(MongoConstants.Users.PASSWORD, user.getPassword())
+				.append(MongoConstants.Users.TUTOSKIPPED, user.getTutoSkipped())
 				.append(MongoConstants.Users.ACTIVE, user.getActive())
-				.append(MongoConstants.Users.TYPE, EUserType.byId(user.getType()).getId());
+				.append(MongoConstants.Users.TYPE, EUserType.byId(user.getType()).getId())
+				.append(MongoConstants.Users.REGISTRATION, user.getRegistrationDate());
 	}
 	
 	public static AuxiliaryBean[] convertToAuxiliaries(List<Document> auxs) {
@@ -53,29 +60,31 @@ public class BeanConverter {
 	}
 	public static AuxiliaryBean convertToAuxiliary(Document aux) {
 		AuxiliaryBean bean = new AuxiliaryBean();
-		bean.setName(aux.getString(MongoConstants.Users.NAME));
-		bean.setEmail(aux.getString(MongoConstants.Users.EMAIL));
-		//!\\ PASSWORD IS NEVER LOADED FROM DB
-		bean.setActive(aux.getBoolean(MongoConstants.Users.ACTIVE));
+		fillAuxiliary(aux, bean);
+		return bean;
+	}
+	public static void fillAuxiliary(Document aux, AuxiliaryBean bean) {
+		fillUser(aux, bean);
 		bean.setCivility(aux.getString(MongoConstants.Auxiliaries.CIVILITY));
 		bean.setFirstName(aux.getString(MongoConstants.Auxiliaries.FIRST_NAME));
 		bean.setLastName(aux.getString(MongoConstants.Auxiliaries.LAST_NAME));
 		bean.setPhone(aux.getString(MongoConstants.Auxiliaries.PHONE));
-		Object o = aux.get(MongoConstants.Auxiliaries.ADDRESS);
-		System.out.println("address: " + o);
-		System.out.println(aux.toJson());
-		return bean;
+		bean.setBirthDate(aux.getDate(MongoConstants.Auxiliaries.BIRTHDATE));
+		bean.setBirthPlace(aux.getString(MongoConstants.Auxiliaries.BIRTHPLACE));
+		bean.setDiploma(aux.getString(MongoConstants.Auxiliaries.DIPLOMA));
+		//Object o = aux.get(MongoConstants.Auxiliaries.ADDRESS);
+		//System.out.println("address: " + o);
+		//System.out.println(aux.toJson());
 	}
 	public static Document convertToDocument(AuxiliaryBean aux){
-		return new Document()
-				.append(MongoConstants.Auxiliaries.NAME, aux.getName())
-				.append(MongoConstants.Auxiliaries.EMAIL, aux.getEmail())
-				.append(MongoConstants.Auxiliaries.PASSWORD, aux.getPassword())
-				.append(MongoConstants.Auxiliaries.ACTIVE, aux.getActive())
-				.append(MongoConstants.Auxiliaries.TYPE, EUserType.byId(aux.getType()).getId())
+		Document doc = convertToDocument((UserBean)aux);
+		return doc
 				.append(MongoConstants.Auxiliaries.CIVILITY, EAuxCivility.fromString(aux.getCivility()).getId())
 				.append(MongoConstants.Auxiliaries.FIRST_NAME, aux.getFirstName())
 				.append(MongoConstants.Auxiliaries.LAST_NAME, aux.getLastName())
+				.append(MongoConstants.Auxiliaries.BIRTHDATE, aux.getBirthDate())
+				.append(MongoConstants.Auxiliaries.BIRTHPLACE, aux.getBirthPlace())
+				.append(MongoConstants.Auxiliaries.DIPLOMA, aux.getDiploma())
 				.append(MongoConstants.Auxiliaries.PHONE, aux.getPhone());		
 	}
 	
@@ -88,41 +97,22 @@ public class BeanConverter {
 	}
 	public static ServiceBean convertToService(Document sad) {
 		ServiceBean bean = new ServiceBean();
-		bean.setName(sad.getString(MongoConstants.Services.NAME));
-		bean.setEmail(sad.getString(MongoConstants.Services.EMAIL));
-		//!\\ PASSWORD IS NEVER LOADED FROM DB
-		bean.setActive(sad.getBoolean(MongoConstants.Services.ACTIVE));
-		bean.setSociety(sad.getString(MongoConstants.Services.SOCIETY));
-		bean.setPhone(sad.getString(MongoConstants.Services.PHONE));
+		fillService(sad, bean);
 		return bean;
 	}
+	public static void fillService(Document doc, ServiceBean bean) {
+		fillUser(doc, bean);
+		bean.setSociety(doc.getString(MongoConstants.Services.SOCIETY));
+		bean.setPhone(doc.getString(MongoConstants.Services.PHONE));
+		bean.setSocialReason(doc.getString(MongoConstants.Services.SOCIALREASON));
+		bean.setSiret(doc.getString(MongoConstants.Services.SIRET));
+	}
 	public static Document convertToDocument(ServiceBean sad){
-		return new Document()
-				.append(MongoConstants.Services.NAME, sad.getName())
-				.append(MongoConstants.Services.EMAIL, sad.getEmail())
-				.append(MongoConstants.Services.PASSWORD, sad.getPassword())
-				.append(MongoConstants.Services.ACTIVE, sad.getActive())
-				.append(MongoConstants.Services.TYPE, EUserType.byId(sad.getType()).getId())
+		Document doc = convertToDocument((UserBean)sad);
+		return doc
 				.append(MongoConstants.Services.SOCIETY, sad.getSociety())
+				.append(MongoConstants.Services.SOCIALREASON, sad.getSocialReason())
+				.append(MongoConstants.Services.SIRET, sad.getSiret())
 				.append(MongoConstants.Services.PHONE, sad.getPhone());		
 	}
-	
-	/*
-	private static List<String> convertToArrayList(String[] in){
-		List<String> list = new ArrayList<String>();
-		if (in == null)
-			return list;
-		for (String i : in){
-			list.add(i);
-		}
-		return list;
-	}
-	@SuppressWarnings("unchecked")
-	private static String[] getArray(Document doc, String key){
-		ArrayList<String> list = (ArrayList<String>)doc.get(key);
-		System.out.println(list);
-		return list.toArray(new String[list.size()]);
-	}
-	*/
-
 }

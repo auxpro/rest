@@ -4,6 +4,7 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 
+import org.ap.web.internal.EConfigProperties;
 import org.ap.web.rest.RestApplication;
 import org.ap.web.service.MongoConnection;
 import org.glassfish.grizzly.http.server.HttpServer;
@@ -57,10 +58,9 @@ public class TestModuleBase extends TestBase {
 	}
 	@BeforeClass
 	public static void setUpDBClient() {
+		EConfigProperties.DB_NAME.setValue("db-test");
+		MongoConnection.reload();
 		CONN = MongoConnection.getInstance();
-	}
-	@AfterClass
-	public static void tearDownDBClient() {
 	}
 	
 	/* TEST SETUP */
@@ -69,17 +69,9 @@ public class TestModuleBase extends TestBase {
 	@Before
 	public void createDB() {
 		TestData.createTestDatabase();
-		/*
-		CONN.getDatabase().drop();
-		List<Document> list = new ArrayList<Document>();
-		for (UserBean user : TestData.TEST_USERS) {
-			list.add(BeanConverter.convertToDocument(user));
-		}
-		CONN.getCollection(MongoConstants.Users.COLLECTION).insertMany(list);
-		*/
 	}
 	@After
-	public void dropDB() {						
-		CONN.getDatabase().drop();		
+	public void destroyDB() {
+		CONN.getDatabase().drop();
 	}
 }

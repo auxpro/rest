@@ -3,5 +3,6 @@
 	"password":"secret",
 	"email":"admin@admin.fr",
 	"active":true,
-	"type":"admin"
+	"type":"admin",
+	"registrationDate":"2016-01-01"
 }

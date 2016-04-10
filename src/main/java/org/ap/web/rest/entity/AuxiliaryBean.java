@@ -17,10 +17,8 @@ public class AuxiliaryBean extends UserBean {
 	private String lastName;
 	private String phone;
 	private AddressBean address;
-	
 	private Date birthDate;
 	private String birthPlace;
-	
 	private String diploma;
 
 	/* CONSTRUCTORS */

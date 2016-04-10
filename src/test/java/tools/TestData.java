@@ -71,6 +71,7 @@ public class TestData {
 					list.add(BeanConverter.convertToDocument(getUserFromJson(path)));
 				}
 			} catch (Exception e) {
+				e.printStackTrace();
 				System.err.println("unable to load ref from: " + path);
 			}
 		}

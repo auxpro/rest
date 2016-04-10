@@ -111,7 +111,6 @@
 					<url>http://localhost:8090/manager</url>
 					<port>8090</port>
 					<server>localhost</server>
-					<path>${project.build.finalName}</path>
 				</configuration>
 			</plugin>
 		</plugins>

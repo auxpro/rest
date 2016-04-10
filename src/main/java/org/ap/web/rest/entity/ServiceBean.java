@@ -33,4 +33,10 @@ public class ServiceBean extends UserBean {
 	
 	public AddressBean getAddress() { return address; }
 	public void setAddress(AddressBean address) { this.address = address; }
+	
+	public String getSocialReason() { return social; }
+	public void setSocialReason(String social) { this.social = social; }
+	
+	public String getSiret() { return siret; }
+	public void setSiret(String siret) { this.siret = siret; }
 }
