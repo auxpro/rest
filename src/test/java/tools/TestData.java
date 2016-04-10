@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.ws.rs.core.UriBuilder;
 
+import org.ap.web.internal.EConfigProperties;
 import org.ap.web.rest.entity.AuxiliaryBean;
 import org.ap.web.rest.entity.BeanConverter;
 import org.ap.web.rest.entity.ServiceBean;
@@ -22,22 +23,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class TestData {
 
-	/* DATABASE INFO */
-
-	public static final String DB_SERVER = "localhost";
-	public static final int    DB_PORT   = 27017;
-	public static final String DB_NAME   = "test-db";
-	public static final String DB_USER   = "";
-	public static final String DB_PASS   = "";
-
 	/* SERVER INFO */
 
 	public static final String HOST_PROTOCOL = "http";
 	public static final String HOST_SERVER   = "localhost";
 	public static final String HOST_PORT     = "8090";
-	public static final String HOST_URLBASE  = "apweb/rest";
 
-	public static final String BASE_URL = HOST_PROTOCOL + "://" + HOST_SERVER + ":" + HOST_PORT + "/" + HOST_URLBASE;
+	public static final String BASE_URL = HOST_PROTOCOL + "://" + HOST_SERVER + ":" + HOST_PORT + "/";
 	public static final URI    BASE_URI = UriBuilder.fromUri(TestData.BASE_URL).build();
 
 	/* OBJECT MAPPER */
@@ -64,6 +56,7 @@ public class TestData {
 	/* CREATE TEST DB */
 
 	public static void createTestDatabase() {
+		MongoConnection.reload();
 		MongoConnection CONN = MongoConnection.getInstance();
 		CONN.getDatabase().drop();
 		List<Document> list = new ArrayList<Document>();
@@ -130,6 +123,7 @@ public class TestData {
 	}
 
 	public static void main(String[] args) {
+		EConfigProperties.DB_NAME.setValue("db-dev");
 		createTestDatabase();
 	}
 }
