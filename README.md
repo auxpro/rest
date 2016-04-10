@@ -22,11 +22,7 @@ Import into eclipse as 'Maven Project'
 
 #### Start database
 
-default configuration localhost:27001
-
-databse used 'db-dev'
-
-run mongo.bat
+run ./mongo/launchMongo.bat
 
 #### Start REST server
 

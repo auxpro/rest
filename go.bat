@@ -1,3 +1,3 @@
 call mvn clean
-call mvn eclipse:clean
-call mvn install
+call mvn install -DskipTests=true
+call mvn tomcat7:run

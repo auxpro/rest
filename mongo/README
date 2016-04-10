@@ -1,9 +1,0 @@
-Start Mongo : launchMongo.bat
-
-Mongo Port : 4242
-
-Mongo Data : ./data
-
-Mong Log : ./log
-
-Start MongoShell : mongoShell.bat
