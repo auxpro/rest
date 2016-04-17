@@ -14,7 +14,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
-import org.ap.web.rest.entity.AuxiliaryBean;
+import org.ap.web.rest.entity.user.AuxiliaryBean;
 
 /**
  * This interface describes the auxiliaries servlet features.

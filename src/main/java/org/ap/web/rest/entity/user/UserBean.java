@@ -1,4 +1,4 @@
-package org.ap.web.rest.entity;
+package org.ap.web.rest.entity.user;
 
 import java.util.Date;
 
@@ -10,8 +10,6 @@ import org.ap.web.rest.security.annotation.SecretInformation;
 @XmlRootElement
 public class UserBean {
 	
-	/* ATTRIBUTES */
-	
 	private String name;
 	private String password;
 	private String email;
@@ -20,11 +18,8 @@ public class UserBean {
 	private String type;
 	private Date registrationDate;
 
-	/* CONSTRUCTORS */
-	
 	public UserBean() {}
 	
-	/* METHODS */
 	
 	@PrivateInformation
 	public String getName() { return name; }

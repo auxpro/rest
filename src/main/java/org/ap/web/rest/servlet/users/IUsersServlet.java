@@ -14,7 +14,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
-import org.ap.web.rest.entity.UserBean;
+import org.ap.web.rest.entity.user.UserBean;
 
 /**
  * This interface describes the user servlet features.

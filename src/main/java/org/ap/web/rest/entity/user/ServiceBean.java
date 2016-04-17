@@ -1,13 +1,12 @@
-package org.ap.web.rest.entity;
+package org.ap.web.rest.entity.user;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.ap.web.rest.entity.constant.EUserType;
+import org.ap.web.rest.entity.contact.AddressBean;
 
 @XmlRootElement
 public class ServiceBean extends UserBean {
-	
-	/* ATTRIBUTES */
 	
 	private String phone;
 	private AddressBean address;
@@ -16,14 +15,9 @@ public class ServiceBean extends UserBean {
 	private String social;
 	private String siret;
 	
-
-	/* CONSTRUCTORS */
-	
 	public ServiceBean() {
 		setType(EUserType.SERVICE.getId());
 	}
-	
-	/* METHODS */
 	
 	public String getSociety() { return society; }
 	public void setSociety(String society) { this.society = society; }

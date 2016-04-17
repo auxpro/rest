@@ -1,4 +1,4 @@
-package org.ap.web.rest.entity;
+package org.ap.web.rest.entity.user;
 
 import java.util.Date;
 
@@ -6,11 +6,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.ap.web.rest.entity.constant.EAuxCivility;
 import org.ap.web.rest.entity.constant.EUserType;
+import org.ap.web.rest.entity.contact.AddressBean;
 
 @XmlRootElement
 public class AuxiliaryBean extends UserBean {
-	
-	/* ATTRIBUTES */
 	
 	private EAuxCivility civility;
 	private String firstName;
@@ -21,13 +20,9 @@ public class AuxiliaryBean extends UserBean {
 	private String birthPlace;
 	private String diploma;
 
-	/* CONSTRUCTORS */
-	
 	public AuxiliaryBean() {
 		setType(EUserType.AUXILIARY.getId());
 	}
-	
-	/* METHODS */
 	
 	public String getCivility() { return civility.getId(); }
 	public void setCivility(String civility) { this.civility = EAuxCivility.fromString(civility); }

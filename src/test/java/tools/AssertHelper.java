@@ -1,8 +1,8 @@
 package tools;
 
-import org.ap.web.rest.entity.AuxiliaryBean;
-import org.ap.web.rest.entity.ServiceBean;
-import org.ap.web.rest.entity.UserBean;
+import org.ap.web.rest.entity.user.AuxiliaryBean;
+import org.ap.web.rest.entity.user.ServiceBean;
+import org.ap.web.rest.entity.user.UserBean;
 
 import junit.framework.TestCase;
 

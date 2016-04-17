@@ -1,4 +1,4 @@
-package org.ap.web.rest.entity;
+package org.ap.web.rest.entity.error;
 
 import javax.xml.bind.annotation.XmlRootElement;
 

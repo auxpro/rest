@@ -8,7 +8,7 @@ import javax.ws.rs.core.Response.Status;
 
 import org.ap.web.internal.APException;
 import org.ap.web.rest.entity.BeanConverter;
-import org.ap.web.rest.entity.UserBean;
+import org.ap.web.rest.entity.user.UserBean;
 import org.ap.web.rest.security.Encoder;
 import org.ap.web.rest.security.UserSecurityContext;
 import org.ap.web.service.users.IUsersService;

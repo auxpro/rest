@@ -5,6 +5,11 @@ import java.util.List;
 import org.ap.web.internal.APException;
 import org.ap.web.rest.entity.constant.EAuxCivility;
 import org.ap.web.rest.entity.constant.EUserType;
+import org.ap.web.rest.entity.error.ErrorBean;
+import org.ap.web.rest.entity.error.ErrorDetailsBean;
+import org.ap.web.rest.entity.user.AuxiliaryBean;
+import org.ap.web.rest.entity.user.ServiceBean;
+import org.ap.web.rest.entity.user.UserBean;
 import org.ap.web.service.MongoConstants;
 import org.bson.Document;
 

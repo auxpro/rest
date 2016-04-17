@@ -4,8 +4,8 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.ap.web.rest.entity.AuxiliaryBean;
-import org.ap.web.rest.entity.UserBean;
+import org.ap.web.rest.entity.user.AuxiliaryBean;
+import org.ap.web.rest.entity.user.UserBean;
 import org.ap.web.rest.servlet.auxiliaries.AuxiliariesServlet;
 import org.junit.Test;
 

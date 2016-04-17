@@ -8,12 +8,12 @@ import java.util.List;
 import javax.ws.rs.core.UriBuilder;
 
 import org.ap.web.internal.EConfigProperties;
-import org.ap.web.rest.entity.AuxiliaryBean;
 import org.ap.web.rest.entity.BeanConverter;
-import org.ap.web.rest.entity.ServiceBean;
-import org.ap.web.rest.entity.UserBean;
 import org.ap.web.rest.entity.constant.EAuxCivility;
 import org.ap.web.rest.entity.constant.EUserType;
+import org.ap.web.rest.entity.user.AuxiliaryBean;
+import org.ap.web.rest.entity.user.ServiceBean;
+import org.ap.web.rest.entity.user.UserBean;
 import org.ap.web.service.MongoConnection;
 import org.ap.web.service.MongoConstants;
 import org.bson.Document;

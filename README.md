@@ -29,3 +29,13 @@ run ./mongo/launchMongo.bat
 default configuration on http://localhost:8090/rest
 
 run 'mvn tomcat7:run'
+
+## TODO NEXT
+
+> address
+> name == email
+> isEmailChecked
+> isPhoneChecked
+> isAddressChecked
+> PUT aux/sad
+> 
