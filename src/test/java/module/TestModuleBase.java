@@ -58,7 +58,7 @@ public class TestModuleBase extends TestBase {
 	}
 	@BeforeClass
 	public static void setUpDBClient() {
-		EConfigProperties.DB_NAME.setValue("db-test");
+		EConfigProperties.DB_NAME.setValue(TestData.DB_TEST);
 		MongoConnection.reload();
 		CONN = MongoConnection.getInstance();
 	}
@@ -68,6 +68,7 @@ public class TestModuleBase extends TestBase {
 	// Database handling
 	@Before
 	public void createDB() {
+		CONN.getDatabase().drop();
 		TestData.createTestDatabase();
 	}
 	@After

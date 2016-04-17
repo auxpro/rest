@@ -34,7 +34,7 @@ public class AuthGetRestTest extends RestTestBase {
 	public void testV_getAuth_AdminUser() throws Exception {
 		UserBean userAdmin = TestData.getUserFromJson("users_admin.json");
 		UserBean user = prepare("", userAdmin.getName(), userAdmin.getPassword()).get(UserBean.class);
-		TestCase.assertEquals("admin", user.getName());
+		TestCase.assertEquals(userAdmin.getName(), user.getName());
 		TestCase.assertEquals(EUserType.ADMIN.getId(), user.getType());
 		TestCase.assertNull(user.getPassword());
 	}
@@ -42,7 +42,7 @@ public class AuthGetRestTest extends RestTestBase {
 	public void testV_getAuth_User() throws Exception {
 		UserBean userAux1 = TestData.getAuxiliaryFromJson("users_aux1.json");
 		UserBean user = prepare("", userAux1.getName(), userAux1.getPassword()).get(UserBean.class);
-		TestCase.assertEquals("user1", user.getName());
+		TestCase.assertEquals(userAux1.getName(), user.getName());
 		TestCase.assertEquals(EUserType.AUXILIARY.getId(), user.getType());
 		TestCase.assertNull(user.getPassword());
 	}

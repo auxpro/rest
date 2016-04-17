@@ -32,6 +32,9 @@ public class TestData {
 	public static final String BASE_URL = HOST_PROTOCOL + "://" + HOST_SERVER + ":" + HOST_PORT + "/";
 	public static final URI    BASE_URI = UriBuilder.fromUri(TestData.BASE_URL).build();
 
+	public static final String DB_DEV = "db-dev";
+	public static final String DB_TEST = "db-test";
+	
 	/* OBJECT MAPPER */
 
 	private static ObjectMapper _MAPPER; 
@@ -56,7 +59,6 @@ public class TestData {
 	/* CREATE TEST DB */
 
 	public static void createTestDatabase() {
-		MongoConnection.reload();
 		MongoConnection CONN = MongoConnection.getInstance();
 		CONN.getDatabase().drop();
 		List<Document> list = new ArrayList<Document>();
@@ -124,7 +126,7 @@ public class TestData {
 	}
 
 	public static void main(String[] args) {
-		EConfigProperties.DB_NAME.setValue("db-dev");
+		EConfigProperties.DB_NAME.setValue(TestData.DB_DEV);
 		createTestDatabase();
 	}
 }

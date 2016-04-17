@@ -2,7 +2,6 @@ package module.rest.services;
 
 import javax.ws.rs.core.Response;
 
-import org.ap.web.rest.entity.user.ServiceBean;
 import org.ap.web.rest.entity.user.UserBean;
 import org.ap.web.rest.servlet.services.ServicesServlet;
 import org.junit.Test;

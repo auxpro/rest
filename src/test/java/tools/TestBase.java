@@ -1,8 +1,6 @@
 package tools;
 
-import org.ap.web.internal.EConfigProperties;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.rules.TestName;
 
@@ -19,11 +17,6 @@ public class TestBase {
 	
 	@Rule 
 	public TestName _tcName = new TestName();
-	
-	@BeforeClass
-	public static void setUpMongo() {
-		EConfigProperties.DB_NAME.setValue("db-test");
-	}
 
 	@Before
 	public void displayName() {

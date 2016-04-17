@@ -67,12 +67,6 @@
 			<artifactId>commons-validator</artifactId>
 			<version>${apache.validator.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-mongodb</artifactId>
-			<version>${spring.release.train}</version>
-		</dependency>
-
 
 		<!-- SCOPE TEST -->
 		<dependency>
