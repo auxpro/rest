@@ -101,7 +101,7 @@ public class TestData {
 	}
 	public static UserBean fillNextUser(UserBean bean) {
 		String name = USER_NAME + USER_ID++;
-		bean.setName(name);
+		bean.setName(name + "@" + name + ".com");
 		bean.setPassword(name);
 		bean.setEmail(name + "@" + name + ".com");
 		bean.setActive(true);

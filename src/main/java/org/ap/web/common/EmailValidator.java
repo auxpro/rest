@@ -17,6 +17,10 @@ public class EmailValidator implements IValidator {
 	/* METHODS */
 
 	public boolean isValid(String email) {
+		return isValid(email, false);
+	}
+	public boolean isValid(String email, boolean acceptNull) {
+		if (email == null || email.trim().equals("")) return acceptNull;
 		return org.apache.commons.validator.routines.EmailValidator.getInstance().isValid(email);
 	}
 }

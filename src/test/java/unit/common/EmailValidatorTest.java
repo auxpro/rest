@@ -8,7 +8,7 @@ import junit.framework.TestCase;
 public class EmailValidatorTest {
 	
 	/* TEST CASES */
-
+	
 	@Test
 	public void testI_InvalidValues() {
 		TestCase.assertFalse(EmailValidator.getInstance().isValid("nameATdomain.com"));
@@ -17,6 +17,14 @@ public class EmailValidatorTest {
 		TestCase.assertFalse(EmailValidator.getInstance().isValid("name@.com"));
 		TestCase.assertFalse(EmailValidator.getInstance().isValid("name@domain.c"));
 		TestCase.assertFalse(EmailValidator.getInstance().isValid("@domain.com"));
+	}
+
+	@Test
+	public void testV_NullValues() {
+		TestCase.assertFalse(EmailValidator.getInstance().isValid(null));
+		TestCase.assertFalse(EmailValidator.getInstance().isValid(""));
+		TestCase.assertTrue(EmailValidator.getInstance().isValid(null, true));
+		TestCase.assertTrue(EmailValidator.getInstance().isValid("", true));
 	}
 	
 	@Test

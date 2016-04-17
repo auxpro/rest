@@ -68,7 +68,6 @@ public class TestModuleBase extends TestBase {
 	// Database handling
 	@Before
 	public void createDB() {
-		CONN.getDatabase().drop();
 		TestData.createTestDatabase();
 	}
 	@After

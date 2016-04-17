@@ -24,8 +24,12 @@ public class PostalValidator implements IValidator {
 
 	/* METHODS */
 
-	public boolean isValid(String phone) {
-		String formatted = phone.replace(" " , "").replace("." , "").replace("-" , "");
+	public boolean isValid(String postal) {
+		return isValid(postal, false);
+	}
+	public boolean isValid(String postal, boolean acceptNull) {
+		if (postal == null || postal.trim().equals("")) return acceptNull;
+		String formatted = postal.replace(" ", "").replace(".", "").replace("-", "");
 		return _pattern.matcher(formatted).matches();
 	}
 }

@@ -7,6 +7,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
+import org.ap.web.common.EmailValidator;
 import org.ap.web.internal.APException;
 import org.ap.web.rest.entity.BeanConverter;
 import org.ap.web.rest.entity.constant.EUserType;
@@ -54,6 +55,8 @@ public class AuxiliariesServlet extends ServletBase implements IAuxiliariesServl
 	@Override
 	public Response createAuxiliaryJSON(SecurityContext sc, AuxiliaryBean bean) {
 		try {
+			if (!EmailValidator.getInstance().isValid(bean.getName())) throw APException.AUX_INFO_INVALID;
+			if (!EmailValidator.getInstance().isValid(bean.getEmail())) throw APException.AUX_INFO_INVALID;
 			Document aux = BeanConverter.convertToDocument(bean);
 			aux = _service.createUser(aux);
 			bean = BeanConverter.convertToAuxiliary(aux);
@@ -79,6 +82,11 @@ public class AuxiliariesServlet extends ServletBase implements IAuxiliariesServl
 	}
 	@Override
 	public Response deleteAuxiliaryJSON(SecurityContext sc, String id) {
-		return sendException(APException.NOT_IMPLEMENTED);
+		try {
+			_service.deleteUser(_service.getUserByEmail(id));
+			return Response.status(200).build();
+		} catch (APException e) {
+			return sendException(e);
+		}
 	}
 }

@@ -25,7 +25,11 @@ public class PhoneValidator implements IValidator {
 	/* METHODS */
 
 	public boolean isValid(String phone) {
-		String formatted = phone.replace(" " , "").replace("." , "").replace("-" , "");
+		return isValid(phone, false);
+	}
+	public boolean isValid(String phone, boolean acceptNull) {
+		if (phone == null || phone.trim().equals("")) return acceptNull;
+		String formatted = phone.replace(" ", "").replace(".", "").replace("-", "");
 		return _pattern.matcher(formatted).matches();
 	}
 }

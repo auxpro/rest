@@ -4,9 +4,12 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.ap.web.internal.APException;
 import org.ap.web.rest.entity.user.AuxiliaryBean;
 import org.ap.web.rest.entity.user.UserBean;
 import org.ap.web.rest.servlet.auxiliaries.AuxiliariesServlet;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import junit.framework.TestCase;
@@ -20,46 +23,69 @@ public class AuxiliariesPostRestTest extends RestTestBase {
 		super(AuxiliariesServlet.PATH);
 	}
 	
+	/* TEST DATA */
+	
+	private AuxiliaryBean bean;
+	private AuxiliaryBean bean2;
+	@Before
+	public void setUp() {
+		bean = TestData.getNextAuxiliary();
+		bean2 = TestData.getNextAuxiliary();
+	}
+	
 	/* TEST CASES */
 	
 	/* Negative Testing */
 
 	@Test
 	public void testI_sameName() throws Exception {
-		UserBean userAdmin = TestData.getUserFromJson("users_admin.json");
-		AuxiliaryBean bean = TestData.getNextAuxiliary();
-		AuxiliaryBean bean2 = TestData.getNextAuxiliary();
 		bean2.setName(bean.getName());
 		prepare("", userAdmin.getName(), userAdmin.getPassword()).post(Entity.entity(MAPPER.writeValueAsString(bean), MediaType.APPLICATION_JSON));
 		Response response = prepare("", userAdmin.getName(), userAdmin.getPassword()).post(Entity.entity(MAPPER.writeValueAsString(bean2), MediaType.APPLICATION_JSON));
-		TestCase.assertEquals(412, response.getStatus());
-		TestCase.assertTrue(response.hasEntity());
+		AssertHelper.assertException(APException.USER_NAME_INUSE, response);
+	}
+	@Test
+	public void testI_noName() throws Exception {
+		bean.setName(null);
+		Response response = prepare("", userAdmin.getName(), userAdmin.getPassword()).post(Entity.entity(MAPPER.writeValueAsString(bean), MediaType.APPLICATION_JSON));
+		AssertHelper.assertException(APException.AUX_INFO_INVALID, response);
+	}
+	@Test
+	public void testI_invalidName() throws Exception {
+		bean.setName("**--//");
+		Response response = prepare("", userAdmin.getName(), userAdmin.getPassword()).post(Entity.entity(MAPPER.writeValueAsString(bean), MediaType.APPLICATION_JSON));
+		AssertHelper.assertException(APException.AUX_INFO_INVALID, response);
 	}
 	@Test
 	public void testI_sameEmail() throws Exception {
-		UserBean userAdmin = TestData.getUserFromJson("users_admin.json");
-		AuxiliaryBean bean = TestData.getNextAuxiliary();
-		AuxiliaryBean bean2 = TestData.getNextAuxiliary();
 		bean2.setEmail(bean.getEmail());
 		prepare("", userAdmin.getName(), userAdmin.getPassword()).post(Entity.entity(MAPPER.writeValueAsString(bean), MediaType.APPLICATION_JSON));
 		Response response = prepare("", userAdmin.getName(), userAdmin.getPassword()).post(Entity.entity(MAPPER.writeValueAsString(bean2), MediaType.APPLICATION_JSON));
-		TestCase.assertEquals(412, response.getStatus());
-		TestCase.assertTrue(response.hasEntity());
+		AssertHelper.assertException(APException.USER_EMAIL_INUSE, response);
 	}
+	@Test
+	public void testI_noEmail() throws Exception {
+		bean.setEmail(null);
+		Response response = prepare("", userAdmin.getName(), userAdmin.getPassword()).post(Entity.entity(MAPPER.writeValueAsString(bean), MediaType.APPLICATION_JSON));
+		AssertHelper.assertException(APException.AUX_INFO_INVALID, response);
+	}
+	@Test
+	public void testI_invalidEmail() throws Exception {
+		bean.setEmail("user@user");
+		Response response = prepare("", userAdmin.getName(), userAdmin.getPassword()).post(Entity.entity(MAPPER.writeValueAsString(bean), MediaType.APPLICATION_JSON));
+		AssertHelper.assertException(APException.AUX_INFO_INVALID, response);
+	}
+	
 	
 	/* Positive Testing */
 	
 	@Test
 	public void testV_asAdmin() throws Exception {
-		UserBean userAdmin = TestData.getUserFromJson("users_admin.json");
-		AuxiliaryBean bean = TestData.getNextAuxiliary();
 		AuxiliaryBean response = prepare("", userAdmin.getName(), userAdmin.getPassword()).post(Entity.entity(MAPPER.writeValueAsString(bean), MediaType.APPLICATION_JSON), AuxiliaryBean.class);
 		AssertHelper.assertAuxiliary(bean, response);
 	}
 	@Test
 	public void testV_asGuest() throws Exception {
-		UserBean userGuest = TestData.getUserFromJson("users_guest.json");
-		AuxiliaryBean bean = TestData.getNextAuxiliary();
 		Response response = prepare("", userGuest.getName(), userGuest.getPassword()).post(Entity.entity(MAPPER.writeValueAsString(bean), MediaType.APPLICATION_JSON));
 		TestCase.assertEquals(201, response.getStatus());
 	}

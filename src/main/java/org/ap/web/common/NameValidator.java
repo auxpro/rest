@@ -24,8 +24,12 @@ public class NameValidator implements IValidator {
 
 	/* METHODS */
 
-	public boolean isValid(String phone) {
-		String formatted = phone.replace(" " , "").replace("." , "").replace("-" , "");
+	public boolean isValid(String name) {
+		return isValid(name, false);
+	}
+	public boolean isValid(String name, boolean acceptNull) {
+		if (name == null || name.trim().equals("")) return acceptNull;
+		String formatted = name.replace(" " , "").replace("." , "").replace("-" , "");
 		return _pattern.matcher(formatted).matches();
 	}
 }

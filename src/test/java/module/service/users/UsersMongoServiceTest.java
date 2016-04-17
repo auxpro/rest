@@ -23,7 +23,7 @@ public class UsersMongoServiceTest extends MongoServiceTestBase {
 	private UsersMongoService _svc;
 	@Before
 	public void setUpService() {
-		_svc = new UsersMongoService(CONN);
+		_svc = new UsersMongoService();
 	}
 	
 	/* TEST CASES */

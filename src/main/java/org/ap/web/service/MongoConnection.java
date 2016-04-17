@@ -12,10 +12,10 @@ public class MongoConnection implements IMongoConnection {
 	/* STATIC */
 	
 	private static MongoConnection INSTANCE = Factory.open();
-	public static MongoConnection getInstance() {
+	public static synchronized MongoConnection getInstance() {
 		return INSTANCE;
 	}
-	public static void reload() {
+	public static synchronized void reload() {
 		INSTANCE = Factory.open();
 	}
 

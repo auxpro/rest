@@ -15,9 +15,11 @@ public class APException extends Exception {
 	public static final APException USER_NOT_DELETED = new APException("USER_NOT_DELETED", Status.INTERNAL_SERVER_ERROR);
 	public static final APException USER_NOT_ADDED = new APException("USER_NOT_ADDED", Status.INTERNAL_SERVER_ERROR);
 
-	public static final APException USER_ID_INUSE = new APException("USER_ID_INUSE", Status.PRECONDITION_FAILED);
-	public static final APException USER_NAME_INUSE = new APException("USER_NAME_INUSE", Status.PRECONDITION_FAILED);
-	public static final APException USER_EMAIL_INUSE = new APException("USER_EMAIL_INUSE", Status.PRECONDITION_FAILED);
+	public static final APException USER_ID_INUSE = new APException("USER_ID_INUSE", Status.BAD_REQUEST);
+	public static final APException USER_NAME_INUSE = new APException("USER_NAME_INUSE", Status.BAD_REQUEST);
+	public static final APException USER_EMAIL_INUSE = new APException("USER_EMAIL_INUSE", Status.BAD_REQUEST);
+	
+	public static final APException AUX_INFO_INVALID = new APException("AUX_INFO_INVALID", Status.BAD_REQUEST);
 
 	/* ATTRIBUTES */
 
