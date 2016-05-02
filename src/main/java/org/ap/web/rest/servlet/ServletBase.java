@@ -10,7 +10,7 @@ import javax.ws.rs.core.SecurityContext;
 import org.ap.web.internal.APException;
 import org.ap.web.rest.entity.BeanConverter;
 import org.ap.web.rest.entity.constant.EUserType;
-import org.ap.web.rest.entity.user.UserBean;
+import org.ap.web.rest.entity.user.CredentialsBean;
 import org.ap.web.rest.security.annotation.SecurityAnnotation;
 
 public abstract class ServletBase {
@@ -48,9 +48,9 @@ public abstract class ServletBase {
 	public Annotation[] resolveAnnotations(SecurityContext sc) {
 		return resolveAnnotations(sc, null);
 	}
-	public Annotation[] resolveAnnotations(SecurityContext sc, UserBean user) {
+	public Annotation[] resolveAnnotations(SecurityContext sc, CredentialsBean credentials) {
 		Set<Annotation> annotations = new HashSet<Annotation>();
-		if (user != null && user.getName().equals(sc.getUserPrincipal().getName())) {
+		if (credentials != null && credentials.getName().equals(sc.getUserPrincipal().getName())) {
 			annotations.add(SecurityAnnotation.PRIVATE.get());
 			annotations.add(SecurityAnnotation.SECRET.get());
 		}

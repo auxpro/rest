@@ -17,6 +17,8 @@ public class EmailValidatorTest {
 		TestCase.assertFalse(EmailValidator.getInstance().isValid("name@.com"));
 		TestCase.assertFalse(EmailValidator.getInstance().isValid("name@domain.c"));
 		TestCase.assertFalse(EmailValidator.getInstance().isValid("@domain.com"));
+		
+		TestCase.assertFalse(EmailValidator.getInstance().isValid("kiko@kiko.lol"));
 	}
 
 	@Test

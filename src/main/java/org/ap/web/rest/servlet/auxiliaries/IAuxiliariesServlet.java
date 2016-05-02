@@ -15,6 +15,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
 import org.ap.web.rest.entity.user.AuxiliaryBean;
+import org.ap.web.rest.entity.user.CredentialsBean;
 
 /**
  * This interface describes the auxiliaries servlet features.
@@ -34,7 +35,7 @@ public interface IAuxiliariesServlet {
 	@POST
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public Response createAuxiliaryJSON(@Context SecurityContext sc, AuxiliaryBean auxiliary);
+	public Response createAuxiliaryJSON(@Context SecurityContext sc, CredentialsBean credentials);
 	
 	@GET
 	@RolesAllowed("authenticated")

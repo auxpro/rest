@@ -19,6 +19,10 @@ public class APException extends Exception {
 	public static final APException USER_NAME_INUSE = new APException("USER_NAME_INUSE", Status.BAD_REQUEST);
 	public static final APException USER_EMAIL_INUSE = new APException("USER_EMAIL_INUSE", Status.BAD_REQUEST);
 	
+	public static final APException USER_NAME_INVALID = new APException("USER_NAME_INVALID", Status.BAD_REQUEST);
+	public static final APException USER_EMAIL_INVALID = new APException("USER_EMAIL_INVALID", Status.BAD_REQUEST);
+	
+	
 	public static final APException AUX_INFO_INVALID = new APException("AUX_INFO_INVALID", Status.BAD_REQUEST);
 
 	/* ATTRIBUTES */

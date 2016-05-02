@@ -12,6 +12,7 @@ import org.ap.web.rest.entity.BeanConverter;
 import org.ap.web.rest.entity.constant.EAuxCivility;
 import org.ap.web.rest.entity.constant.EUserType;
 import org.ap.web.rest.entity.user.AuxiliaryBean;
+import org.ap.web.rest.entity.user.CredentialsBean;
 import org.ap.web.rest.entity.user.ServiceBean;
 import org.ap.web.rest.entity.user.UserBean;
 import org.ap.web.service.MongoConnection;
@@ -96,6 +97,16 @@ public class TestData {
 	private static String USER_NAME = "newUser";
 	private static int USER_ID = 0;
 
+	public static CredentialsBean getNextCredentials() {
+		return fillNextCredentials(new CredentialsBean());
+	}
+	public static CredentialsBean fillNextCredentials(CredentialsBean bean) {
+		String name = USER_NAME + USER_ID++;
+		bean.setName(name + "@" + name + ".com");
+		bean.setPassword(name);
+		bean.setEmail(name + "@" + name + ".com");
+		return bean;
+	}
 	public static UserBean getNextUser() {
 		return fillNextUser(new UserBean());
 	}

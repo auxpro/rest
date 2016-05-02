@@ -7,6 +7,7 @@ import org.ap.web.rest.entity.BeanConverter;
 import org.ap.web.rest.entity.error.ErrorBean;
 import org.ap.web.rest.entity.error.ErrorDetailsBean;
 import org.ap.web.rest.entity.user.AuxiliaryBean;
+import org.ap.web.rest.entity.user.CredentialsBean;
 import org.ap.web.rest.entity.user.ServiceBean;
 import org.ap.web.rest.entity.user.UserBean;
 
@@ -27,9 +28,13 @@ public class AssertHelper {
 		TestCase.assertEquals(expected.getMessage(), actual.getMessage());
 	}
 	
-	public static void assertUser(UserBean expected, UserBean actual) {
+	public static void assertCredentials(CredentialsBean expected, CredentialsBean actual) {
 		TestCase.assertEquals(expected.getName(), actual.getName());
 		TestCase.assertEquals(expected.getEmail(), actual.getEmail());
+	}
+	
+	public static void assertUser(UserBean expected, UserBean actual) {
+		assertCredentials(expected, actual);
 		TestCase.assertEquals(expected.getActive(), actual.getActive());
 		TestCase.assertEquals(expected.getTutoSkipped(), actual.getTutoSkipped());
 		TestCase.assertEquals(expected.getType(), actual.getType());

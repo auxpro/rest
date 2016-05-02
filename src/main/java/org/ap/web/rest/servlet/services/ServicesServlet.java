@@ -7,9 +7,11 @@ import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
+import org.ap.web.common.EmailValidator;
 import org.ap.web.internal.APException;
 import org.ap.web.rest.entity.BeanConverter;
 import org.ap.web.rest.entity.constant.EUserType;
+import org.ap.web.rest.entity.user.CredentialsBean;
 import org.ap.web.rest.entity.user.ServiceBean;
 import org.ap.web.rest.servlet.ServletBase;
 import org.ap.web.service.users.IUsersService;
@@ -52,12 +54,18 @@ public class ServicesServlet extends ServletBase implements IServicesServlet {
 		}
 	}
 	@Override
-	public Response createServiceJSON(SecurityContext sc, ServiceBean bean) {
+	public Response createServiceJSON(SecurityContext sc, CredentialsBean bean) {
 		try {
-			Document sad = BeanConverter.convertToDocument(bean);
-			sad = _service.createUser(sad);
-			bean = BeanConverter.convertToService(sad);
-			return Response.status(201).entity(bean, resolveAnnotations(sc, bean)).build();
+			if (!EmailValidator.getInstance().isValid(bean.getName())) throw APException.USER_NAME_INVALID;
+			if (!EmailValidator.getInstance().isValid(bean.getEmail())) throw APException.USER_EMAIL_INVALID;
+			ServiceBean service = new ServiceBean();
+			service.setName(bean.getName());
+			service.setEmail(bean.getEmail());
+			service.setPassword(bean.getPassword());
+			Document doc = BeanConverter.convertToDocument(service);
+			doc = _service.createUser(doc);
+			service = BeanConverter.convertToService(doc);
+			return Response.status(201).entity(service, resolveAnnotations(sc, bean)).build();
 		} catch (APException e) {
 			return sendException(e);
 		}

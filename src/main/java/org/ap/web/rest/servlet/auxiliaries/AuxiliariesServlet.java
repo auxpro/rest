@@ -12,6 +12,7 @@ import org.ap.web.internal.APException;
 import org.ap.web.rest.entity.BeanConverter;
 import org.ap.web.rest.entity.constant.EUserType;
 import org.ap.web.rest.entity.user.AuxiliaryBean;
+import org.ap.web.rest.entity.user.CredentialsBean;
 import org.ap.web.rest.servlet.ServletBase;
 import org.ap.web.service.users.IUsersService;
 import org.ap.web.service.users.UsersMongoService;
@@ -53,16 +54,23 @@ public class AuxiliariesServlet extends ServletBase implements IAuxiliariesServl
 		}
 	}
 	@Override
-	public Response createAuxiliaryJSON(SecurityContext sc, AuxiliaryBean bean) {
+	public Response createAuxiliaryJSON(SecurityContext sc, CredentialsBean bean) {
 		try {
-			if (!EmailValidator.getInstance().isValid(bean.getName())) throw APException.AUX_INFO_INVALID;
-			if (!EmailValidator.getInstance().isValid(bean.getEmail())) throw APException.AUX_INFO_INVALID;
-			Document aux = BeanConverter.convertToDocument(bean);
-			aux = _service.createUser(aux);
-			bean = BeanConverter.convertToAuxiliary(aux);
-			return Response.status(201).entity(bean, resolveAnnotations(sc, bean)).build();
+			if (!EmailValidator.getInstance().isValid(bean.getName())) throw APException.USER_NAME_INVALID;
+			if (!EmailValidator.getInstance().isValid(bean.getEmail())) throw APException.USER_EMAIL_INVALID;
+			AuxiliaryBean auxiliary = new AuxiliaryBean();
+			auxiliary.setName(bean.getName());
+			auxiliary.setEmail(bean.getEmail());
+			auxiliary.setPassword(bean.getPassword());
+			Document doc = BeanConverter.convertToDocument(auxiliary);
+			doc = _service.createUser(doc);
+			auxiliary = BeanConverter.convertToAuxiliary(doc);
+			return Response.status(201).entity(auxiliary, resolveAnnotations(sc, bean)).build();
 		} catch (APException e) {
 			return sendException(e);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Response.status(500).build();
 		}
 	}
 	@Override

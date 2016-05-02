@@ -14,6 +14,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
+import org.ap.web.rest.entity.user.CredentialsBean;
 import org.ap.web.rest.entity.user.ServiceBean;
 
 /**
@@ -34,7 +35,7 @@ public interface IServicesServlet {
 	@POST
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public Response createServiceJSON(@Context SecurityContext sc, ServiceBean service);
+	public Response createServiceJSON(@Context SecurityContext sc, CredentialsBean credentials);
 	
 	@GET
 	@RolesAllowed("authenticated")

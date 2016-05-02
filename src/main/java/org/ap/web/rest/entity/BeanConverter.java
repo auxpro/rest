@@ -8,6 +8,7 @@ import org.ap.web.rest.entity.constant.EUserType;
 import org.ap.web.rest.entity.error.ErrorBean;
 import org.ap.web.rest.entity.error.ErrorDetailsBean;
 import org.ap.web.rest.entity.user.AuxiliaryBean;
+import org.ap.web.rest.entity.user.CredentialsBean;
 import org.ap.web.rest.entity.user.ServiceBean;
 import org.ap.web.rest.entity.user.UserBean;
 import org.ap.web.service.MongoConstants;
@@ -24,6 +25,23 @@ public class BeanConverter {
 		return exBean;
 	}
 	
+	public static CredentialsBean convertToCredentials(Document credentials) {
+		CredentialsBean bean = new CredentialsBean();
+		fillCredentials(credentials, bean);
+		return bean;
+	}
+	public static void fillCredentials(Document credentials, CredentialsBean bean) {
+		bean.setName(credentials.getString(MongoConstants.Users.NAME));
+		bean.setEmail(credentials.getString(MongoConstants.Users.EMAIL));
+		//!\\ PASSWORD IS NEVER LOADED FROM DB
+	}
+	public static Document convertToDocument(CredentialsBean credentials){
+		return new Document()
+				.append(MongoConstants.Users.NAME, credentials.getName())
+				.append(MongoConstants.Users.EMAIL, credentials.getEmail())
+				.append(MongoConstants.Users.PASSWORD, credentials.getPassword());
+	}
+	
 	public static UserBean[] convertToUsers(List<Document> users) {
 		UserBean[] beans = new UserBean[users.size()];
 		for (int i = 0 ; i < beans.length ; i++) {
@@ -37,19 +55,15 @@ public class BeanConverter {
 		return bean;
 	}
 	public static void fillUser(Document user, UserBean bean) {
-		bean.setName(user.getString(MongoConstants.Users.NAME));
-		bean.setEmail(user.getString(MongoConstants.Users.EMAIL));
-		//!\\ PASSWORD IS NEVER LOADED FROM DB
+		fillCredentials(user, bean);
 		bean.setActive(user.getBoolean(MongoConstants.Users.ACTIVE));
 		bean.setTutoSkipped(user.getBoolean(MongoConstants.Users.TUTOSKIPPED));
 		bean.setType(EUserType.byId(user.getString(MongoConstants.Users.TYPE)).getId());
 		bean.setRegistrationDate(user.getDate(MongoConstants.Users.REGISTRATION));
 	}
 	public static Document convertToDocument(UserBean user){
-		return new Document()
-				.append(MongoConstants.Users.NAME, user.getName())
-				.append(MongoConstants.Users.EMAIL, user.getEmail())
-				.append(MongoConstants.Users.PASSWORD, user.getPassword())
+		Document doc = convertToDocument((CredentialsBean)user);
+		return doc
 				.append(MongoConstants.Users.TUTOSKIPPED, user.getTutoSkipped())
 				.append(MongoConstants.Users.ACTIVE, user.getActive())
 				.append(MongoConstants.Users.TYPE, EUserType.byId(user.getType()).getId())

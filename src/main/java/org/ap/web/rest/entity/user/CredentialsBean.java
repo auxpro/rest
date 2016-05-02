@@ -5,7 +5,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.ap.web.rest.security.annotation.PrivateInformation;
 import org.ap.web.rest.security.annotation.SecretInformation;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @XmlRootElement
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class CredentialsBean {
 	
 	private String name;

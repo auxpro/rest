@@ -2,8 +2,9 @@ package org.ap.web.rest.entity.constant;
 
 public enum EAuxCivility {
 
-	MR ("Mr"),
-	MS ("Mme"),
+	MR   ("Mr"),
+	MS   ("Mme"),
+	NULL (""),
 	;
 	
 	private String _id;
@@ -15,6 +16,6 @@ public enum EAuxCivility {
 		for (EAuxCivility civ : EAuxCivility.values()) {
 			if (civ.getId().equals(id)) return civ;
 		}
-		return null;
+		return NULL;
 	}
 }

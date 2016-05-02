@@ -11,7 +11,7 @@ import org.ap.web.rest.entity.contact.AddressBean;
 @XmlRootElement
 public class AuxiliaryBean extends UserBean {
 	
-	private EAuxCivility civility;
+	private EAuxCivility civility = EAuxCivility.NULL;
 	private String firstName;
 	private String lastName;
 	private String phone;
