@@ -83,7 +83,16 @@ public class ServicesServlet extends ServletBase implements IServicesServlet {
 	}
 	@Override
 	public Response updateServiceJSON(SecurityContext sc, String id, ServiceBean bean) {
-		return sendException(APException.NOT_IMPLEMENTED);
+		try {
+			if (_service.getUserByName(id) == null) throw APException.USER_NOT_FOUND;
+			if (!sc.getUserPrincipal().getName().equals(id)) return Response.status(403).build();
+			Document doc = BeanConverter.convertToDocument(bean);
+			doc = _service.updateUser(doc);
+			bean = BeanConverter.convertToService(doc);
+			return Response.status(200).entity(bean, resolveAnnotations(sc, bean)).build();
+		} catch (APException e) {
+			return sendException(e);
+		}
 	}
 	@Override
 	public Response deleteServiceJSON(SecurityContext sc, String id) {

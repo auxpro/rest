@@ -86,7 +86,16 @@ public class AuxiliariesServlet extends ServletBase implements IAuxiliariesServl
 	}
 	@Override
 	public Response updateAuxiliaryJSON(SecurityContext sc, String id, AuxiliaryBean bean) {
-		return sendException(APException.NOT_IMPLEMENTED);
+		try {
+			if (_service.getUserByName(id) == null) throw APException.USER_NOT_FOUND;
+			if (!sc.getUserPrincipal().getName().equals(id)) return Response.status(403).build();
+			Document doc = BeanConverter.convertToDocument(bean);
+			doc = _service.updateUser(doc);
+			bean = BeanConverter.convertToAuxiliary(doc);
+			return Response.status(200).entity(bean, resolveAnnotations(sc, bean)).build();
+		} catch (APException e) {
+			return sendException(e);
+		}
 	}
 	@Override
 	public Response deleteAuxiliaryJSON(SecurityContext sc, String id) {

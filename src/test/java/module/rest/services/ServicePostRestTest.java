@@ -1,13 +1,14 @@
-package module.rest.auxiliaries;
+package module.rest.services;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.ap.web.internal.APException;
-import org.ap.web.rest.entity.user.AuxiliaryBean;
 import org.ap.web.rest.entity.user.CredentialsBean;
-import org.ap.web.rest.servlet.auxiliaries.AuxiliariesServlet;
+import org.ap.web.rest.entity.user.ServiceBean;
+import org.ap.web.rest.entity.user.UserBean;
+import org.ap.web.rest.servlet.services.ServicesServlet;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,10 +17,10 @@ import module.rest.RestTestBase;
 import tools.AssertHelper;
 import tools.TestData;
 
-public class AuxiliariesPostRestTest extends RestTestBase {
+public class ServicePostRestTest extends RestTestBase {
 
-	public AuxiliariesPostRestTest() {
-		super(AuxiliariesServlet.PATH);
+	public ServicePostRestTest() {
+		super(ServicesServlet.PATH);
 	}
 	
 	/* TEST DATA */
@@ -60,7 +61,6 @@ public class AuxiliariesPostRestTest extends RestTestBase {
 		bean2.setEmail(bean.getEmail());
 		prepare("", userAdmin.getName(), userAdmin.getPassword()).post(Entity.entity(MAPPER.writeValueAsString(bean), MediaType.APPLICATION_JSON));
 		Response response = prepare("", userAdmin.getName(), userAdmin.getPassword()).post(Entity.entity(MAPPER.writeValueAsString(bean2), MediaType.APPLICATION_JSON));
-		//System.out.println(response.readEntity(String.class));
 		AssertHelper.assertException(APException.USER_EMAIL_INUSE, response);
 	}
 	@Test
@@ -76,12 +76,11 @@ public class AuxiliariesPostRestTest extends RestTestBase {
 		AssertHelper.assertException(APException.USER_EMAIL_INVALID, response);
 	}
 	
-	
 	/* Positive Testing */
 	
 	@Test
 	public void testV_asAdmin() throws Exception {
-		AuxiliaryBean response = prepare("", userAdmin.getName(), userAdmin.getPassword()).post(Entity.entity(MAPPER.writeValueAsString(bean), MediaType.APPLICATION_JSON), AuxiliaryBean.class);
+		ServiceBean response = prepare("", userAdmin.getName(), userAdmin.getPassword()).post(Entity.entity(MAPPER.writeValueAsString(bean), MediaType.APPLICATION_JSON), ServiceBean.class);
 		AssertHelper.assertCredentials(bean, response);
 	}
 	@Test

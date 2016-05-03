@@ -1,5 +1,7 @@
 package tools;
 
+import org.ap.web.rest.entity.user.AuxiliaryBean;
+import org.ap.web.rest.entity.user.ServiceBean;
 import org.ap.web.rest.entity.user.UserBean;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -16,8 +18,8 @@ public class TestBase {
 	
 	protected static UserBean userAdmin;
 	protected static UserBean userGuest;
-	protected static UserBean userAux1;
-	protected static UserBean userSad1;
+	protected static AuxiliaryBean userAux1;
+	protected static ServiceBean userSad1;
 	@BeforeClass
 	public static void setUpTestData() throws Exception {
 		userAdmin = TestData.getUserFromJson("users_admin.json");
