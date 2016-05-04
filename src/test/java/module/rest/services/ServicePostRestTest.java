@@ -7,7 +7,6 @@ import javax.ws.rs.core.Response;
 import org.ap.web.internal.APException;
 import org.ap.web.rest.entity.user.CredentialsBean;
 import org.ap.web.rest.entity.user.ServiceBean;
-import org.ap.web.rest.entity.user.UserBean;
 import org.ap.web.rest.servlet.services.ServicesServlet;
 import org.junit.Before;
 import org.junit.Test;

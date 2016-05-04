@@ -2,6 +2,7 @@ package module.rest.auxiliaries;
 
 import javax.ws.rs.core.Response;
 
+import org.ap.web.rest.entity.user.AuxiliaryBean;
 import org.ap.web.rest.servlet.auxiliaries.AuxiliariesServlet;
 import org.junit.Test;
 
@@ -29,10 +30,8 @@ public class AuxiliariesGetRestTest extends RestTestBase {
 	
 	@Test
 	public void testV_asAdmin() throws Exception {
-		String responseMsg = prepare("", userAdmin.getName(), userAdmin.getPassword()).get(String.class);
-		TestCase.assertTrue(responseMsg.contains("\"name\":\"user1\""));
-		TestCase.assertTrue(responseMsg.contains("\"name\":\"user2\""));
-		TestCase.assertFalse(responseMsg.contains("\"password\""));
+		AuxiliaryBean[] beans = prepare("", userAdmin.getName(), userAdmin.getPassword()).get(AuxiliaryBean[].class);
+		TestCase.assertEquals(3, beans.length);
 	}
 	@Test
 	public void testV_asGuest() throws Exception {

@@ -14,7 +14,6 @@ import org.junit.Test;
 import junit.framework.TestCase;
 import module.service.MongoServiceTestBase;
 import tools.AssertHelper;
-import tools.TestData;
 
 public class UsersMongoServiceTest extends MongoServiceTestBase {
 
@@ -51,12 +50,10 @@ public class UsersMongoServiceTest extends MongoServiceTestBase {
 
 	@Test
 	public void testV_CheckUserValid() throws Exception {
-		UserBean userAdmin = TestData.getUserFromJson("users_admin.json");
 		AssertHelper.assertUser(userAdmin, BeanConverter.convertToUser(_svc.checkUser(userAdmin.getName(), userAdmin.getPassword())));
 	}
 	@Test
 	public void testV_getUserByName_Valid() throws Exception {
-		UserBean userAdmin = TestData.getUserFromJson("users_admin.json");
 		AssertHelper.assertUser(userAdmin, BeanConverter.convertToUser(_svc.getUserByName(userAdmin.getName())));
 	}
 	@Test
@@ -65,7 +62,6 @@ public class UsersMongoServiceTest extends MongoServiceTestBase {
 	}
 	@Test
 	public void testV_CheckEmailExists() throws Exception {
-		UserBean userAdmin = TestData.getUserFromJson("users_admin.json");
 		AssertHelper.assertUser(userAdmin, BeanConverter.convertToUser(_svc.getUserByEmail(userAdmin.getEmail())));
 	}
 	@Test
@@ -74,7 +70,7 @@ public class UsersMongoServiceTest extends MongoServiceTestBase {
 	}
 	@Test
 	public void testV_CountUsers() throws APException {
-		TestCase.assertEquals(6, _svc.getUsers(new HashMap<String, Object>()).size());
+		TestCase.assertEquals(8, _svc.getUsers(new HashMap<String, Object>()).size());
 	}
 	@Test
 	public void testV_CreateUser() throws Exception {
@@ -91,14 +87,14 @@ public class UsersMongoServiceTest extends MongoServiceTestBase {
 	}
 	@Test
 	public void testV_UpdateUser() throws Exception {
-		UserBean user = BeanConverter.convertToUser(_svc.getUserByName("user1"));
+		UserBean user = BeanConverter.convertToUser(_svc.getUserByName(userAux1.getName()));
 		user.setEmail("newemail@lol.fr");
 		UserBean created = BeanConverter.convertToUser(_svc.updateUser(BeanConverter.convertToDocument(user)));
 		AssertHelper.assertUser(user, created);
 	}
 	@Test
 	public void testV_DeleteUser() throws Exception {
-		UserBean user = BeanConverter.convertToUser(_svc.getUserByName("user1"));
+		UserBean user = BeanConverter.convertToUser(_svc.getUserByName(userAux1.getName()));
 		UserBean deleted = BeanConverter.convertToUser(_svc.deleteUser(BeanConverter.convertToDocument(user)));
 		AssertHelper.assertUser(user, deleted);
 	}
