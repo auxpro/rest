@@ -4,7 +4,6 @@ import org.ap.web.rest.entity.user.AuxiliaryBean;
 import org.ap.web.rest.entity.user.ServiceBean;
 import org.ap.web.rest.entity.user.UserBean;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.rules.TestName;
 
@@ -16,12 +15,12 @@ public class TestBase {
 	
 	/* TEST DATA */
 	
-	protected static UserBean userAdmin;
-	protected static UserBean userGuest;
-	protected static AuxiliaryBean userAux1;
-	protected static ServiceBean userSad1;
-	@BeforeClass
-	public static void setUpTestData() throws Exception {
+	protected UserBean userAdmin;
+	protected UserBean userGuest;
+	protected AuxiliaryBean userAux1;
+	protected ServiceBean userSad1;
+	@Before
+	public void setUpTestData() throws Exception {
 		userAdmin = TestData.getUserFromJson("users_admin.json");
 		userGuest = TestData.getUserFromJson("users_guest.json");
 		userAux1 = TestData.getAuxiliaryFromJson("users_aux1.json");
